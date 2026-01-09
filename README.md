@@ -2,6 +2,8 @@
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Size](https://img.shields.io/badge/size-%3C50kb-orange.svg)
 
+📄 Lisans: MIT  
+Bu yazılım MIT lisansı ile sunulmuştur. Lütfen kaynak kodu veya türevlerinde [Mürsel EREN](https://github.com/teknolojitasarimci) adına atıfta bulunun.
 
 ## 📋 İçindekiler
 
