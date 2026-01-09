@@ -21,9 +21,9 @@ Bu yazılım MIT lisansı ile sunulmuştur. Lütfen kaynak kodu veya türevlerin
 
 ## 🌟 Giriş
 
-ME Access, dijital uçurumu kapatmak ve her bireyin web içeriğine eşit erişimini sağlamak amacıyla geliştirilmiş, "önce tasarım" (design-first) felsefesini benimseyen profesyonel bir erişilebilirlik katmanıdır. Piyasadaki çoğu çözümün aksine, kurumsal kimliğinizi bozmayan modern bir estetik sunar.
+ME Accessibility, dijital uçurumu kapatmak ve her bireyin web içeriğine eşit erişimini sağlamak amacıyla geliştirilmiş, "önce tasarım" (design-first) felsefesini benimseyen profesyonel bir erişilebilirlik katmanıdır. Piyasadaki çoğu çözümün aksine, kurumsal kimliğinizi bozmayan modern bir estetik sunar.
 
-### Neden ME Access?
+### Neden ME Accessibility?
 
 - ✅ **Sıfır Bağımlılık**: Hiçbir harici kütüphaneye ihtiyaç duymaz
 - ✅ **Vanilla JavaScript**: Pure JavaScript ile maksimum performans
@@ -112,7 +112,7 @@ Gelişmiş okunabilirlik için optimize edilmiş sans-serif font.
 4. Aşağıdaki kodu `</body>` etiketinden önce ekleyin:
 
 ```html
-<!-- ME Access Widget -->
+<!-- ME Accessibility Widget -->
 <script src="URL_TO_YOUR_JS_FILE" async></script>
 ```
 
@@ -164,7 +164,7 @@ Widget'ı kullanmak için:
 
 ## ✅ WCAG Uyumluluğu
 
-ME Access, W3C'nin Web İçeriği Erişilebilirlik Yönergeleri (WCAG) 2.1 standardını tam olarak karşılar:
+ME Accessibility, W3C'nin Web İçeriği Erişilebilirlik Yönergeleri (WCAG) 2.1 standardını tam olarak karşılar:
 
 ### Karşılanan Standartlar
 
@@ -241,7 +241,7 @@ Bu proje MIT Lisansı altında lisanslanmıştır.
 ```
 MIT License
 
-Copyright (c) 2024 ME Access
+Copyright (c) 2026 ME Accessibility
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -282,7 +282,7 @@ Bu yazılım "olduğu gibi" (as-is) sunulmaktadır. Geliştirici; yazılımın k
 
 -----------
 
-# ME Access - Comprehensive Documentation
+# ME Accessibility - Comprehensive Documentation
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Size](https://img.shields.io/badge/size-%3C50kb-orange.svg)
 
@@ -303,15 +303,15 @@ Bu yazılım "olduğu gibi" (as-is) sunulmaktadır. Geliştirici; yazılımın k
 
 ## 🌟 Introduction
 
-ME Access is a professional accessibility layer built with a "design-first" philosophy to bridge the digital divide. Unlike legacy solutions, it provides high-end accessibility without compromising your corporate aesthetic. It ensures that every individual, regardless of their abilities, can access web content equally.
+ME Accessibility is a professional accessibility layer built with a "design-first" philosophy to bridge the digital divide. Unlike legacy solutions, it provides high-end accessibility without compromising your corporate aesthetic. It ensures that every individual, regardless of their abilities, can Accessibility web content equally.
 
-### Why ME Access?
+### Why ME Accessibility?
 
 - ✅ **Zero Dependencies**: No external libraries required
 - ✅ **Vanilla JavaScript**: Pure JavaScript for maximum performance
 - ✅ **Glassmorphism UI**: Modern interface inspired by Apple design language
 - ✅ **WCAG 2.1 Compliant**: International accessibility standards
-- ✅ **Keyboard Support**: Access all features without a mouse
+- ✅ **Keyboard Support**: Accessibility all features without a mouse
 - ✅ **Persistent Storage**: User preferences saved in browser
 
 ---
@@ -394,7 +394,7 @@ Optimized sans-serif font for enhanced readability.
 4. Add the following code before `</body>`:
 
 ```html
-<!-- ME Access Widget -->
+<!-- ME Accessibility Widget -->
 <script src="URL_TO_YOUR_JS_FILE" async></script>
 ```
 
@@ -446,14 +446,14 @@ To use the widget:
 
 ## ✅ WCAG Compliance
 
-ME Access fully complies with W3C's Web Content Accessibility Guidelines (WCAG) 2.1:
+ME Accessibility fully complies with W3C's Web Content Accessibility Guidelines (WCAG) 2.1:
 
 ### Supported Standards
 
 | Criterion | Description | Status |
 |-----------|-------------|--------|
 | 2.5.5 Touch Target Size | Minimum 44x44px | ✅ 65px |
-| 2.1.1 Keyboard | Keyboard access to all functions | ✅ |
+| 2.1.1 Keyboard | Keyboard Accessibility to all functions | ✅ |
 | 1.4.3 Contrast | 4.5:1 contrast ratio | ✅ |
 | 3.2.4 Consistent Identification | Consistent navigation | ✅ |
 | 4.1.2 Name, Role, Value | ARIA labels | ✅ |
@@ -522,7 +522,7 @@ This project is licensed under the MIT License.
 ```
 MIT License
 
-Copyright (c) 2024 ME Access
+Copyright (c) 2026 ME Accessibility
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
