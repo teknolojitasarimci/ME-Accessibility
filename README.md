@@ -1,4 +1,4 @@
-# ME Access - Kapsamlı Dokümantasyon
+# ME Accessibility - Kapsamlı Dokümantasyon
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Size](https://img.shields.io/badge/size-%3C50kb-orange.svg)
 
@@ -289,7 +289,7 @@ Bu yazılım "olduğu gibi" (as-is) sunulmaktadır. Geliştirici; yazılımın k
 
 -----------
 
-# ME Access - Comprehensive Documentation
+# ME Accessibility - Comprehensive Documentation
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg) ![License](https://img.shields.io/badge/license-MIT-green.svg) ![Size](https://img.shields.io/badge/size-%3C50kb-orange.svg)
 
