@@ -207,15 +207,6 @@ Tüm kontroller için uygun ARIA etiketleri tanımlanmıştır:
 
 ### Proje Yapısı
 
-```
-mebis-access/
-├── index.html              # Demo sayfası
-├── mebi-erisilebilirlik.js # Ana widget dosyası
-├── README_TR.md            # Türkçe dokümantasyon
-├── README_EN.md            # English documentation
-├── blogger-guide.md        # Blogger entegrasyon rehberi
-└── LICENSE                 # MIT Lisansı
-```
 
 ### Geliştirme Ortamı
 
@@ -497,16 +488,6 @@ Appropriate ARIA labels are defined for all controls:
 ## 🛠️ Development and Contribution
 
 ### Project Structure
-
-```
-mebis-access/
-├── index.html              # Demo page
-├── mebi-erisilebilirlik.js # Main widget file
-├── README_TR.md            # Turkish documentation
-├── README_EN.md            # English documentation
-├── blogger-guide.md        # Blogger integration guide
-└── LICENSE                 # MIT License
-```
 
 ### Development Environment
 
