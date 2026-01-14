@@ -763,9 +763,13 @@
         const modalImg = document.createElement('img');
         modalImg.src = img.src || img.currentSrc;
         modalImg.style.cssText = `
-            max-width: 90vw; max-height: 90vh; object-fit: contain;
+            max-width: 90vw; max-height: 90vh; 
+            min-width: 60vw; min-height: 60vh;
+            width: auto; height: auto;
+            object-fit: contain;
             border: 2px solid #fff; border-radius: 8px;
             box-shadow: 0 0 50px rgba(0,0,0,1);
+            background: rgba(255, 255, 255, 0.1);
             transform: scale(0.9); transition: transform 0.3s;
         `;
         
