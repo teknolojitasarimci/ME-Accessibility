@@ -29,7 +29,9 @@
         speechRate: 1,
         textAlign: 'default',
         bigMode: true,
-        shortcuts: false
+        shortcuts: false,
+        cursorSize: 32,
+        interactiveImages: false
     };
 
     let settings = { ...DEFAULT_SETTINGS };
@@ -69,14 +71,15 @@
             @media (max-width: 360px) { #${p}-panel { width: calc(100vw - 20px) !important; right: 10px !important; bottom: 85px !important; } }
             
             #${p}-trigger { 
-                position: fixed; right: 20px !important; bottom: 20px !important; width: 60px; height: 60px; 
-                cursor: pointer; background: transparent; border: none; border-radius: 50%;
-                padding: 0; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
-                z-index: 2147483647; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+                position: fixed !important; right: 20px !important; bottom: 20px !important; width: 60px !important; height: 60px !important; 
+                cursor: pointer !important; background: transparent !important; border: none !important; border-radius: 50% !important;
+                padding: 0 !important; transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+                z-index: 2147483647 !important; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25)) !important;
+                display: block !important; visibility: visible !important; opacity: 1 !important;
             }
             #${p}-trigger:hover { transform: scale(1.1); }
+            #${p}-trigger svg { width: 100% !important; height: 100% !important; }
             #${p}-trigger svg g { fill: #057a8f !important; }
-            #${p}-trigger:focus { outline: 3px solid #057a8f; outline-offset: 4px; }
             #${p}-trigger:focus:not(:focus-visible) { outline: none; }
             #${p}-trigger:focus-visible { outline: 3px solid #057a8f; outline-offset: 4px; }
 
@@ -206,14 +209,32 @@
             body.${p}-dyslexia { font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif !important; }
             body.${p}-readable { font-family: 'SF Pro Text', Arial, sans-serif !important; font-weight: 500; letter-spacing: 0.2px; }
             
-            body.${p}-cursor-white, body.${p}-cursor-white *:not(#${p}-widget *) { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path fill='white' stroke='black' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/></svg>") 0 0, auto !important; }
-            body.${p}-cursor-black, body.${p}-cursor-black *:not(#${p}-widget *) { cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><path fill='black' stroke='white' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/></svg>") 0 0, auto !important; }
+            body.${p}-cursor-white, body.${p}-cursor-white *:not(#${p}-widget *) { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='white' stroke='black' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/%3E%3C/svg%3E") 0 0, auto !important; }
+            body.${p}-cursor-black, body.${p}-cursor-black *:not(#${p}-widget *) { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='black' stroke='white' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/%3E%3C/svg%3E") 0 0, auto !important; }
             
             body.${p}-hide-images img { opacity: 0 !important; visibility: hidden !important; transition: opacity 0.3s; }
             body.${p}-highlight-links a { background: rgba(255, 235, 59, 0.4) !important; color: #000 !important; text-decoration: underline !important; border-radius: 2px; }
             body.${p}-spacing-letter { letter-spacing: 2px !important; }
             body.${p}-spacing-line { line-height: 2 !important; }
             body.${p}-spacing-word { word-spacing: 6px !important; }
+
+            body.${p}-interactive-images img { cursor: zoom-in !important; transition: transform 0.2s; outline: 3px solid transparent; }
+            body.${p}-interactive-images img:hover { transform: scale(1.02); outline: 3px solid var(--${p}-accent); }
+            
+            body.${p}-align-left { text-align: left !important; }
+            body.${p}-align-left * { text-align: left !important; }
+            body.${p}-align-center { text-align: center !important; }
+            body.${p}-align-center * { text-align: center !important; }
+            body.${p}-align-right { text-align: right !important; }
+            body.${p}-align-right * { text-align: right !important; }
+
+            #${p}-toast {
+                position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.85); color: #fff; padding: 12px 24px;
+                border-radius: 50px; font-size: 14px; font-weight: 500; z-index: 2147483647;
+                display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); animation: ${p}-fadeIn 0.3s;
+            }
+            @keyframes ${p}-fadeIn { from { opacity:0; transform:translate(-50%, -10px); } to { opacity:1; transform:translate(-50%, 0); } }
             
             body { color: var(--${p}-text-color) !important; background-color: var(--${p}-bg-color) !important; transition: background-color 0.3s, color 0.3s; }
             h1, h2, h3, h4, h5, h6 { color: var(--${p}-title-color) !important; }
@@ -237,15 +258,18 @@
         if (typeof parsed.wordSpacing === 'boolean') safe.wordSpacing = parsed.wordSpacing;
         if (typeof parsed.readingGuide === 'boolean') safe.readingGuide = parsed.readingGuide;
         if (typeof parsed.readingMask === 'boolean') safe.readingMask = parsed.readingMask;
+        if (typeof parsed.magnifier === 'boolean') safe.magnifier = parsed.magnifier;
         if (typeof parsed.highlightLinks === 'boolean') safe.highlightLinks = parsed.highlightLinks;
         if (typeof parsed.dyslexiaFont === 'boolean') safe.dyslexiaFont = parsed.dyslexiaFont;
         if (typeof parsed.readableFont === 'boolean') safe.readableFont = parsed.readableFont;
         if (['default', 'white', 'black'].includes(parsed.cursor)) safe.cursor = parsed.cursor;
         if (typeof parsed.hideImages === 'boolean') safe.hideImages = parsed.hideImages;
+        if (typeof parsed.interactiveImages === 'boolean') safe.interactiveImages = parsed.interactiveImages;
         if (parsed.speechRate && typeof parsed.speechRate === 'number' && parsed.speechRate >= 0.5 && parsed.speechRate <= 2) safe.speechRate = parsed.speechRate;
         if (['default', 'left', 'center', 'right'].includes(parsed.textAlign)) safe.textAlign = parsed.textAlign;
         if (typeof parsed.bigMode === 'boolean') safe.bigMode = parsed.bigMode;
         if (typeof parsed.shortcuts === 'boolean') safe.shortcuts = parsed.shortcuts;
+        if (parsed.cursorSize && typeof parsed.cursorSize === 'number' && parsed.cursorSize >= 24 && parsed.cursorSize <= 128) safe.cursorSize = parsed.cursorSize;
         const isValidColor = (c) => /^#[0-9A-Fa-f]{6}$/.test(c);
         if (parsed.textColor && isValidColor(parsed.textColor)) safe.textColor = parsed.textColor;
         if (parsed.titleColor && isValidColor(parsed.titleColor)) safe.titleColor = parsed.titleColor;
@@ -289,12 +313,21 @@
             }, CONFIG.announceDelay);
         };
         
+        const toast = document.createElement('div'); toast.id = `${p}-toast`; toast.setAttribute('role', 'alert');
+        
+        const showToast = (msg) => {
+             toast.textContent = msg;
+             toast.style.display = 'block';
+             setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        };
+
         panel.innerHTML = `
             <div class="${p}-header" role="banner">
                 <div class="${p}-header-left"><div class="${p}-header-icon" aria-hidden="true">${MAIN_ICON_SVG}</div><h2 id="${p}-title">Erişilebilirlik</h2></div>
                 <button class="${p}-header-close" id="${p}-close-btn" aria-label="Paneli kapat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
             <div class="${p}-content" role="main" aria-labelledby="${p}-title">
+                <!-- Content truncated for brevity, assume strict replacement matches structure -->
                 <!-- 1. Yazı Boyutu -->
                 <section class="${p}-section" aria-labelledby="${p}-font-heading"><h3 id="${p}-font-heading">Yazı Boyutu</h3><div class="${p}-font-control" role="group" aria-label="Yazı boyutunu ayarla"><button class="${p}-font-btn" data-action="decFont" aria-label="Yazı boyutunu azalt">-</button><span class="${p}-font-val" id="font-display" aria-live="polite" aria-atomic="true">100%</span><button class="${p}-font-btn" data-action="incFont" aria-label="Yazı boyutunu artır">+</button></div></section>
                 
@@ -302,7 +335,7 @@
                 <section class="${p}-section" aria-labelledby="${p}-reader-heading"><h3 id="${p}-reader-heading">Sesli Okuma</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="speechPlay" aria-label="Sayfayı sesli oku"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg></i>Oku</button><button class="${p}-btn" data-action="speechPause" aria-label="Okumayı duraklat"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></i>Duraklat</button><button class="${p}-btn" data-action="speechStop" aria-label="Okumayı baştan başlat"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg></i>Tekrar</button></div><div class="${p}-slider-row"><label for="speech-rate">Hız:</label><input type="range" class="${p}-slider" min="0.5" max="2" step="0.1" value="1" id="speech-rate" aria-label="Okuma hızı" aria-valuemin="0.5" aria-valuemax="2" aria-valuenow="1"></div></section>
 
                 <!-- 3. Okuma Yardımı -->
-                <section class="${p}-section" aria-labelledby="${p}-reading-heading"><h3 id="${p}-reading-heading">Okuma Yardımı</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="toggleGuide" id="btn-guide" aria-label="Okuma rehberi" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></i><span>Rehber</span></button><button class="${p}-btn" data-action="toggleMask" id="btn-mask" aria-label="Okuma maskesi" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14v12c-3.31 0-6-2.69-6-6s2.69-6 6-6z"/></svg></i><span>Maske</span></button><button class="${p}-btn" data-action="toggleImages" id="btn-images" aria-label="Görselleri gizle" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zm-2 0H5V5h14v14z"/><path d="M8.5 13.5l2.5 3 3.5-4.5 4.5 6H6l2.5-4.5z"/></svg></i><span>Görsel Gizle</span></button></div></section>
+                <section class="${p}-section" aria-labelledby="${p}-reading-heading"><h3 id="${p}-reading-heading">Okuma Yardımı</h3><div class="${p}-grid-2"><button class="${p}-btn" data-action="toggleGuide" id="btn-guide" aria-label="Okuma rehberi" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></i><span>Rehber</span></button><button class="${p}-btn" data-action="toggleMask" id="btn-mask" aria-label="Okuma maskesi" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14v12c-3.31 0-6-2.69-6-6s2.69-6 6-6z"/></svg></i><span>Maske</span></button><button class="${p}-btn" data-action="toggleImages" id="btn-images" aria-label="Görselleri gizle" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zm-2 0H5V5h14v14z"/><path d="M8.5 13.5l2.5 3 3.5-4.5 4.5 6H6l2.5-4.5z"/></svg></i><span>Görsel Gizle</span></button><button class="${p}-btn" data-action="toggleInteractiveImages" id="btn-interactive-images" aria-label="Görsellere tıklayınca büyüt" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></i><span>Görsel Büyüt</span></button></div></section>
 
                 <!-- 4. Yazı Tipi -->
                 <section class="${p}-section" aria-labelledby="${p}-font-type-heading"><h3 id="${p}-font-type-heading">Yazı Tipi</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="toggleDyslexia" id="btn-dyslexia" aria-label="Disleksi dostu font" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></i><span>Disleksi<br>Dostu</span></button><button class="${p}-btn" data-action="toggleReadable" id="btn-readable" aria-label="Okunaklı font" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><path d="M9 22h6"/><path d="M12 22V5"/></svg></i><span>Okunaklı<br>Font</span></button><button class="${p}-btn" data-action="toggleLinks" id="btn-links" aria-label="Bağlantıları vurgula" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></i><span>Bağlantı<br>Vurgusu</span></button></div></section>
@@ -317,7 +350,17 @@
                 <section class="${p}-section" aria-labelledby="${p}-color-heading"><h3 id="${p}-color-heading">Görsel Ayarlar</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="toggleContrast" id="btn-contrast" aria-label="Yüksek kontrast" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14v12c-3.31 0-6-2.69-6-6s2.69-6 6-6z"/></svg></i>Kontrast</button><button class="${p}-btn" data-action="toggleGray" id="btn-gray" aria-label="Solgun renkler" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.3"/></svg></i>Solgun</button><button class="${p}-btn" data-action="lowSaturation" id="btn-lowsat" aria-label="Düşük doygunluk" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/></svg></i>Düşük</button><button class="${p}-btn" data-action="highSaturation" id="btn-highsat" aria-label="Yüksek doygunluk" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg></i>Yüksek</button></div></section>
 
                 <!-- 8. İmleç -->
-                <section class="${p}-section" aria-labelledby="${p}-cursor-heading"><h3 id="${p}-cursor-heading">İmleç</h3><div class="${p}-grid-2"><button class="${p}-btn" data-action="cursorWhite" id="btn-cur-white" aria-label="Beyaz imleç" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="white" stroke="#374151" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg></i><span>Beyaz İmleç</span></button><button class="${p}-btn" data-action="cursorBlack" id="btn-cur-black" aria-label="Siyah imleç" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="#374151" stroke="#374151" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg></i><span>Siyah İmleç</span></button></div></section>
+                <section class="${p}-section" aria-labelledby="${p}-cursor-heading"><h3 id="${p}-cursor-heading">İmleç</h3>
+                    <div class="${p}-grid-2" style="margin-bottom:8px;">
+                        <button class="${p}-btn" data-action="cursorWhite" id="btn-cur-white" aria-label="Beyaz imleç" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="white" stroke="#374151" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg></i><span>Beyaz</span></button>
+                        <button class="${p}-btn" data-action="cursorBlack" id="btn-cur-black" aria-label="Siyah imleç" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="#374151" stroke="#374151" stroke-width="2"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg></i><span>Siyah</span></button>
+                    </div>
+                    <div class="${p}-font-control" role="group" aria-label="İmleç boyutunu ayarla">
+                        <button class="${p}-font-btn" data-action="decCursor" aria-label="İmleç boyutunu azalt">-</button>
+                        <span class="${p}-font-val" id="cursor-size-display" aria-live="polite" aria-atomic="true">32px</span>
+                        <button class="${p}-font-btn" data-action="incCursor" aria-label="İmleç boyutunu artır">+</button>
+                    </div>
+                </section>
 
                 <!-- 9. Renk Kişiselleştirme -->
                 <section class="${p}-section" aria-labelledby="${p}-colors-heading">
@@ -349,7 +392,7 @@
             </div>
         `;
 
-        widget.append(filterOverlay, guide, mask, trigger, panel, announcer);
+        widget.append(filterOverlay, guide, mask, trigger, panel, announcer, toast);
         document.body.appendChild(widget);
 
         const colors = ['#0066cc', '#7c3aed', '#dc2626', '#ea580c', '#facc15', '#0891b2', '#65a30d', '#ffffff', '#000000'];
@@ -390,7 +433,7 @@
             });
         });
         
-        return { widget, trigger, panel, guide, mask, filterOverlay, announce };
+        return { widget, trigger, panel, guide, mask, filterOverlay, announce, showToast };
     };
 
     const saveSettings = () => { try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(settings)); } catch(e) { console.error('Erişilebilirlik ayarları kaydedilemedi:', e); } };
@@ -405,7 +448,7 @@
         const p = CONFIG.prefix;
         const scale = settings.fontSize / 100;
         const widget = document.getElementById(`${p}-widget`);
-        const all = document.body.querySelectorAll('*');
+        const all = document.body.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, li, div, label, input, button, textarea, td, th, blockquote, figcaption, b, i, strong, em');
         const updates = [];
         
         all.forEach(el => {
@@ -419,7 +462,7 @@
 
             if (el.dataset.osmanOrigFs) {
                 const origVal = parseFloat(el.dataset.osmanOrigFs);
-                if (!isNaN(origVal)) {
+                if (!isNaN(origVal) && origVal > 0) {
                     if (scale === 1) updates.push({ el, remove: true });
                     else updates.push({ el, size: origVal * scale });
                 }
@@ -432,12 +475,81 @@
         });
     };
 
+    const updateColors = () => {
+        const p = CONFIG.prefix;
+        const widget = document.getElementById(`${p}-widget`);
+        const all = document.body.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, li, div, label, input, button, textarea, td, th, section, article, header, footer, nav');
+        
+        const tc = settings.textColor;
+        const bg = settings.bgColor;
+        const ti = settings.titleColor;
+
+        const isTransparent = (color) => {
+            if (!color || color === 'transparent' || color === 'rgba(0, 0, 0, 0)') return true;
+            return false;
+        };
+
+        if (!tc && !bg && !ti) {
+            all.forEach(el => {
+                if (widget && (el === widget || widget.contains(el))) return;
+                el.style.removeProperty('color');
+                el.style.removeProperty('background-color');
+            });
+            document.body.style.removeProperty('background-color');
+            document.body.style.removeProperty('color');
+            return;
+        }
+
+        if (bg) document.body.style.setProperty('background-color', bg, 'important');
+        if (tc) document.body.style.setProperty('color', tc, 'important');
+
+        all.forEach(el => {
+            if (widget && (el === widget || widget.contains(el))) return;
+            if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'IMG', 'VIDEO', 'SVG', 'PATH', 'CIRCLE', 'RECT', 'CANVAS', 'IFRAME'].includes(el.tagName)) return;
+            if (el.tagName === 'I' || el.classList.contains('fa') || el.classList.contains('fas') || el.classList.contains('material-icons')) return;
+
+            const style = window.getComputedStyle(el);
+            if (style.backgroundImage && style.backgroundImage !== 'none') return;
+
+            if (bg) {
+                if (!isTransparent(style.backgroundColor)) {
+                   el.style.setProperty('background-color', bg, 'important');
+                }
+            } else {
+                el.style.removeProperty('background-color');
+            }
+
+            const isTitle = ['H1','H2','H3','H4','H5','H6'].includes(el.tagName);
+            
+            if (isTitle && ti) {
+                el.style.setProperty('color', ti, 'important');
+            } else if (tc) {
+                if (!isTitle || !ti) {
+                     el.style.setProperty('color', tc, 'important');
+                }
+            } else {
+                 if (!isTitle || !ti) el.style.removeProperty('color');
+            }
+        });
+    };
+
     const applySettings = (ui) => {
         const p = CONFIG.prefix, body = document.body, overlay = ui.filterOverlay;
+
+        const updateButton = (id, isActive) => { 
+            const el = document.getElementById(id); 
+            if(el) {
+                isActive ? el.classList.add('active') : el.classList.remove('active');
+                el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            }
+        };
+
         [...body.classList].forEach(c => { if(c.startsWith(p + '-')) body.classList.remove(c); });
         overlay.className = '';
 
         updateTextSize();
+        updateColors();
+
         const display = document.getElementById('font-display');
         if(display) display.textContent = settings.fontSize + '%';
 
@@ -451,30 +563,34 @@
         if(settings.wordSpacing) body.classList.add(`${p}-spacing-word`);
         if(settings.dyslexiaFont) body.classList.add(`${p}-dyslexia`);
         if(settings.readableFont) body.classList.add(`${p}-readable`);
-        if(settings.cursor === 'white') body.classList.add(`${p}-cursor-white`);
-        if(settings.cursor === 'black') body.classList.add(`${p}-cursor-black`);
-        if(settings.hideImages) body.classList.add(`${p}-hide-images`);
-        if(settings.highlightLinks) body.classList.add(`${p}-highlight-links`);
-        if(settings.textAlign === 'left') body.classList.add(`${p}-align-left`);
-        if(settings.textAlign === 'center') body.classList.add(`${p}-align-center`);
-        if(settings.textAlign === 'right') body.classList.add(`${p}-align-right`);
-        if(settings.bigMode) body.classList.add(`${p}-big-mode`);
+        if(settings.cursor === 'white') {
+             const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${settings.cursorSize}' height='${settings.cursorSize}' viewBox='0 0 32 32'><path fill='white' stroke='black' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/></svg>`;
+             body.classList.add(`${p}-cursor-white`);
+             const url = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+             const style = document.createElement('style');
+             style.id = `${p}-cursor-style`;
+             style.textContent = `body.${p}-cursor-white, body.${p}-cursor-white *:not(#${p}-widget *) { cursor: url("${url}") 0 0, auto !important; }`;
+             const oldStyle = document.getElementById(`${p}-cursor-style`);
+             if(oldStyle) oldStyle.remove();
+             document.head.appendChild(style);
+        } else if(settings.cursor === 'black') {
+             const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${settings.cursorSize}' height='${settings.cursorSize}' viewBox='0 0 32 32'><path fill='black' stroke='white' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/></svg>`;
+             body.classList.add(`${p}-cursor-black`);
+              const url = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
+             const style = document.createElement('style');
+             style.id = `${p}-cursor-style`;
+             style.textContent = `body.${p}-cursor-black, body.${p}-cursor-black *:not(#${p}-widget *) { cursor: url("${url}") 0 0, auto !important; }`;
+             const oldStyle = document.getElementById(`${p}-cursor-style`);
+             if(oldStyle) oldStyle.remove();
+             document.head.appendChild(style);
+        } else {
+             const oldStyle = document.getElementById(`${p}-cursor-style`);
+             if(oldStyle) oldStyle.remove();
+        }
 
-        if(settings.textColor) body.style.setProperty(`--${p}-text-color`, settings.textColor); else body.style.removeProperty(`--${p}-text-color`);
-        if(settings.bgColor) body.style.setProperty(`--${p}-bg-color`, settings.bgColor); else body.style.removeProperty(`--${p}-bg-color`);
-        if(settings.titleColor) body.style.setProperty(`--${p}-title-color`, settings.titleColor); else body.style.removeProperty(`--${p}-title-color`);
+        const cursorDisplay = document.getElementById('cursor-size-display');
+        if(cursorDisplay) cursorDisplay.textContent = settings.cursorSize + 'px';
 
-        document.getElementById(`${p}-guide`).style.display = settings.readingGuide ? 'block' : 'none';
-        document.getElementById(`${p}-mask`).style.display = settings.readingMask ? 'block' : 'none';
-        
-        const updateButton = (id, isActive) => { 
-            const el = document.getElementById(id); 
-            if(el) {
-                isActive ? el.classList.add('active') : el.classList.remove('active');
-                el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-            }
-        };
-        
         updateButton('btn-contrast', settings.contrast === 'high');
         updateButton('btn-gray', settings.saturation === 'gray');
         updateButton('btn-lowsat', settings.saturation === 'low');
@@ -495,8 +611,29 @@
         updateButton('btn-align-right', settings.textAlign === 'right');
         updateButton('btn-big-mode', settings.bigMode);
         updateButton('btn-shortcuts', settings.shortcuts);
-        
+        if(settings.hideImages) body.classList.add(`${p}-hide-images`);
+        if(settings.interactiveImages) body.classList.add(`${p}-interactive-images`);
+        if(settings.highlightLinks) body.classList.add(`${p}-highlight-links`);
+        if(settings.textAlign === 'left') body.classList.add(`${p}-align-left`);
 
+        if(settings.textAlign === 'center') body.classList.add(`${p}-align-center`);
+        if(settings.textAlign === 'right') body.classList.add(`${p}-align-right`);
+        if(settings.bigMode) body.classList.add(`${p}-big-mode`);
+
+        if(settings.bigMode) body.classList.add(`${p}-big-mode`);
+
+        let mag = document.getElementById(`${p}-magnifier`);
+        if(mag) mag.style.display = 'none';
+
+        if(settings.textColor) body.style.setProperty(`--${p}-text-color`, settings.textColor); else body.style.removeProperty(`--${p}-text-color`);
+        if(settings.bgColor) body.style.setProperty(`--${p}-bg-color`, settings.bgColor); else body.style.removeProperty(`--${p}-bg-color`);
+        if(settings.titleColor) body.style.setProperty(`--${p}-title-color`, settings.titleColor); else body.style.removeProperty(`--${p}-title-color`);
+
+        document.getElementById(`${p}-guide`).style.display = settings.readingGuide ? 'block' : 'none';
+        document.getElementById(`${p}-mask`).style.display = settings.readingMask ? 'block' : 'none';
+        
+        updateButton('btn-magnifier', settings.magnifier);
+        updateButton('btn-interactive-images', settings.interactiveImages);
         
         document.querySelectorAll(`.${p}-color-box`).forEach(box => {
             const t = box.dataset.type, c = box.dataset.color;
@@ -564,17 +701,13 @@
             u.lang = 'tr-TR';
             u.rate = settings.speechRate;
 
-            const preferredVoices = [
-                v => v.lang.includes('tr') && v.name.includes('Natural'),
-                v => v.lang.includes('tr') && v.name.includes('Google'),
-                v => v.lang.includes('tr') && v.name.includes('Yelda'),
-                v => v.lang.includes('tr') && v.name.includes('Microsoft'),
-                v => v.lang.includes('tr')
-            ];
-
-            let selectedVoice = null;
-            for (let filter of preferredVoices) { selectedVoice = voices.find(filter); if (selectedVoice) break; }
-            if (selectedVoice) u.voice = selectedVoice;
+            let selectedVoice = voices.find(v => v.lang.startsWith('tr') && !v.name.includes('Google'));
+            if (!selectedVoice) selectedVoice = voices.find(v => v.lang.startsWith('tr'));
+            if (!selectedVoice) selectedVoice = voices.find(v => v.lang.includes('tr'));
+            
+            if (selectedVoice) {
+                u.voice = selectedVoice;
+            }
 
             u.onend = () => { isReading = false; cleanupSpeech(); };
             u.onerror = () => { isReading = false; cleanupSpeech(); };
@@ -590,7 +723,6 @@
         if (isActive) {
             ui.panel.classList.add('active');
             ui.trigger.setAttribute('aria-expanded', 'true');
-            document.body.style.overflow = 'hidden'; 
             ui.announce('Erişilebilirlik paneli açıldı');
             setTimeout(() => { const firstBtn = ui.panel.querySelector('button:not([disabled])'); if(firstBtn) firstBtn.focus(); }, 100);
         } else {
@@ -602,6 +734,60 @@
         }
     };
 
+    const interactiveImageClickHandler = (e) => {
+        if(!settings.interactiveImages) return;
+        const p = CONFIG.prefix;
+        if(e.target.closest(`#${p}-widget`)) return;
+
+        const elements = document.elementsFromPoint(e.clientX, e.clientY);
+        const img = elements.find(el => el.tagName === 'IMG');
+        
+        if(!img) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        const existingModal = document.getElementById(`${p}-img-modal`);
+        if(existingModal) existingModal.remove();
+
+        const modal = document.createElement('div');
+        modal.id = `${p}-img-modal`;
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.95); z-index: 2147483647;
+            display: flex; align-items: center; justify-content: center;
+            cursor: zoom-out; opacity: 0; transition: opacity 0.3s;
+        `;
+        
+        const modalImg = document.createElement('img');
+        modalImg.src = img.src || img.currentSrc;
+        modalImg.style.cssText = `
+            max-width: 90vw; max-height: 90vh; object-fit: contain;
+            border: 2px solid #fff; border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            transform: scale(0.9); transition: transform 0.3s;
+        `;
+        
+        modal.appendChild(modalImg);
+        document.body.appendChild(modal);
+
+        requestAnimationFrame(() => {
+            modal.style.opacity = '1';
+            modalImg.style.transform = 'scale(1)';
+        });
+        
+        const close = () => {
+            modal.style.opacity = '0';
+            modalImg.style.transform = 'scale(0.9)';
+            setTimeout(() => modal.remove(), 300);
+        };
+        
+        modal.onclick = close;
+        const escHandler = (ev) => { if(ev.key === 'Escape') { close(); document.removeEventListener('keydown', escHandler); } };
+        document.addEventListener('keydown', escHandler);
+    };
+
     const init = () => {
         if (!document.documentElement.lang) document.documentElement.setAttribute('lang', 'tr');
         
@@ -610,10 +796,9 @@
              window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
         }
 
-        injectStyles(); 
+        try { injectStyles(); } catch(e) { console.error('Stil hatası:', e); }
+        
         const ui = createUI(); 
-        loadSettings(); 
-        applySettings(ui);
         
         ui.trigger.addEventListener('click', () => togglePanel(ui));
         const closeBtn = document.getElementById(`${CONFIG.prefix}-close-btn`);
@@ -624,6 +809,13 @@
                 togglePanel(ui, false);
             }
         });
+
+        document.removeEventListener('click', interactiveImageClickHandler, true);
+        document.addEventListener('click', interactiveImageClickHandler, true);
+
+        window.onbeforeunload = () => {
+            if (window.speechSynthesis) window.speechSynthesis.cancel();
+        };
 
         const focusableSelector = 'button:not([disabled]):not([tabindex="-1"]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex="0"]';
         ui.panel.addEventListener('keydown', (e) => {
@@ -640,8 +832,11 @@
             
             if(btn && !box) {
                 const act = btn.dataset.action;
+                if(act === 'closePanel') { togglePanel(ui, false); return; }
                 if(act === 'incFont') { settings.fontSize = Math.min(settings.fontSize + 10, 200); ui.announce(`Yazı boyutu yüzde ${settings.fontSize}`); applySettings(ui); return; }
                 if(act === 'decFont') { settings.fontSize = Math.max(settings.fontSize - 10, 70); ui.announce(`Yazı boyutu yüzde ${settings.fontSize}`); applySettings(ui); return; }
+                if(act === 'incCursor') { settings.cursorSize = Math.min(settings.cursorSize + 8, 128); ui.announce(`İmleç boyutu ${settings.cursorSize} piksel`); applySettings(ui); return; }
+                if(act === 'decCursor') { settings.cursorSize = Math.max(settings.cursorSize - 8, 24); ui.announce(`İmleç boyutu ${settings.cursorSize} piksel`); applySettings(ui); return; }
                 if(act === 'toggleContrast') { settings.contrast = settings.contrast === 'high' ? 'normal' : 'high'; ui.announce(settings.contrast === 'high' ? 'Yüksek kontrast açıldı' : 'Kontrast sıfırlandı'); }
                 if(act === 'toggleGray') { settings.saturation = settings.saturation === 'gray' ? 'normal' : 'gray'; ui.announce(settings.saturation === 'gray' ? 'Solgun renk modu açıldı' : 'Renkler sıfırlandı'); }
                 if(act === 'lowSaturation') { settings.saturation = settings.saturation === 'low' ? 'normal' : 'low'; ui.announce(settings.saturation === 'low' ? 'Düşük doygunluk açıldı' : 'Renkler sıfırlandı'); }
@@ -655,6 +850,12 @@
                 if(act === 'cursorBlack') { settings.cursor = settings.cursor === 'black' ? 'default' : 'black'; ui.announce(settings.cursor === 'black' ? 'Siyah imleç açıldı' : 'İmleç sıfırlandı'); }
                 if(act === 'toggleLinks') { settings.highlightLinks = !settings.highlightLinks; ui.announce(settings.highlightLinks ? 'Bağlantılar vurgulandı' : 'Bağlantı vurgusu kaldırıldı'); }
                 if(act === 'toggleImages') { settings.hideImages = !settings.hideImages; ui.announce(settings.hideImages ? 'Görseller gizlendi' : 'Görseller gösteriliyor'); }
+                if(act === 'toggleInteractiveImages') { 
+                    settings.interactiveImages = !settings.interactiveImages; 
+                    ui.announce(settings.interactiveImages ? 'Görsel büyütme açıldı' : 'Görsel büyütme kapatıldı');
+                    if(settings.interactiveImages) ui.showToast('Görsel Büyütme Açık: Bir resme tıklayın');
+                    applySettings(ui); return; 
+                }
                 if(act === 'toggleGuide') { settings.readingGuide = !settings.readingGuide; if(settings.readingGuide) settings.readingMask = false; ui.announce(settings.readingGuide ? 'Okuma rehberi açıldı' : 'Okuma rehberi kapatıldı'); }
                 if(act === 'toggleMask') { settings.readingMask = !settings.readingMask; if(settings.readingMask) settings.readingGuide = false; ui.announce(settings.readingMask ? 'Okuma maskesi açıldı' : 'Okuma maskesi kapatıldı'); }
                 if(act === 'alignLeft') { settings.textAlign = settings.textAlign === 'left' ? 'default' : 'left'; ui.announce('Metin sola hizalandı'); }
@@ -692,7 +893,7 @@
                 applySettings(ui);
             }
         });
-
+        
         const sl = document.getElementById('speech-rate');
         if(sl) { sl.addEventListener('input', (e) => { settings.speechRate = parseFloat(e.target.value); sl.setAttribute('aria-valuenow', settings.speechRate); if(isReading) { speak('stop'); speak('play'); } }); }
         
@@ -702,28 +903,33 @@
             if(settings.readingGuide) ui.guide.style.top = (e.clientY - 2) + 'px';
             if(settings.readingMask) ui.mask.style.top = (e.clientY - 50) + 'px';
         });
+        try {
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Escape' && ui.panel.classList.contains('active')) { togglePanel(ui, false); return; }
+                if(!e.altKey) return;
+                const target = e.target.tagName.toLowerCase();
+                if (['input', 'textarea', 'select'].includes(target) || e.target.isContentEditable) return;
+                const k = e.key.toLowerCase();
+                if(k === 'a') { e.preventDefault(); togglePanel(ui); }
+                if(k === 'r') { e.preventDefault(); ui.announce('Tüm ayarlar sıfırlanıyor'); const savedShortcuts = settings.shortcuts; setTimeout(() => { localStorage.removeItem(CONFIG.storageKey); settings = { ...DEFAULT_SETTINGS, shortcuts: savedShortcuts }; applySettings(ui); }, 200); }
+                if(k === '+' || k === '=') { e.preventDefault(); settings.fontSize = Math.min(settings.fontSize + 10, 200); ui.announce(`Yazı boyutu yüzde ${settings.fontSize}`); applySettings(ui); }
+                if(k === '-' || k === '_') { e.preventDefault(); settings.fontSize = Math.max(settings.fontSize - 10, 70); ui.announce(`Yazı boyutu yüzde ${settings.fontSize}`); applySettings(ui); }
+                if(k === 'k') { e.preventDefault(); settings.contrast = settings.contrast === 'high' ? 'normal' : 'high'; ui.announce(settings.contrast === 'high' ? 'Yüksek kontrast açıldı' : 'Kontrast sıfırlandı'); applySettings(ui); }
+                if(k === 'o') { e.preventDefault(); speak('play'); ui.announce('Sesli okuma başlatıldı'); }
+            });
 
-        document.addEventListener('keydown', (e) => {
-            if(e.key === 'Escape' && ui.panel.classList.contains('active')) { togglePanel(ui, false); return; }
-            if(!e.altKey) return;
-            const target = e.target.tagName.toLowerCase();
-            if (['input', 'textarea', 'select'].includes(target) || e.target.isContentEditable) return;
-            const k = e.key.toLowerCase();
-            if(k === 'a') { e.preventDefault(); togglePanel(ui); }
-            if(k === 'r') { e.preventDefault(); ui.announce('Tüm ayarlar sıfırlanıyor'); const savedShortcuts = settings.shortcuts; setTimeout(() => { localStorage.removeItem(CONFIG.storageKey); settings = { ...DEFAULT_SETTINGS, shortcuts: savedShortcuts }; applySettings(ui); }, 200); }
-            if(k === '+' || k === '=') { e.preventDefault(); settings.fontSize = Math.min(settings.fontSize + 10, 200); ui.announce(`Yazı boyutu yüzde ${settings.fontSize}`); applySettings(ui); }
-            if(k === '-' || k === '_') { e.preventDefault(); settings.fontSize = Math.max(settings.fontSize - 10, 70); ui.announce(`Yazı boyutu yüzde ${settings.fontSize}`); applySettings(ui); }
-            if(k === 'k') { e.preventDefault(); settings.contrast = settings.contrast === 'high' ? 'normal' : 'high'; ui.announce(settings.contrast === 'high' ? 'Yüksek kontrast açıldı' : 'Kontrast sıfırlandı'); applySettings(ui); }
-            if(k === 'o') { e.preventDefault(); speak('play'); ui.announce('Sesli okuma başlatıldı'); }
-        });
-        
+            loadSettings(); 
+            applySettings(ui);
+        } catch (err) {
+            console.error('MEBİ Access: Ayarlar yüklenirken hata oluştu.', err);
+            ui.showToast('Ayarlar yüklenemedi. Konsolu kontrol edin.');
+        }
+
         setTimeout(() => {
             const btn = document.querySelector(`#${CONFIG.prefix}-trigger`);
             const panel = document.querySelector(`#${CONFIG.prefix}-panel`);
-            const hasRole = panel && panel.getAttribute('role') === 'dialog';
-            const touchOK = document.querySelector(`.${CONFIG.prefix}-color-box`)?.getBoundingClientRect().width >= 44;
-            if (hasRole && touchOK) { console.log('%c [Osman Access] WCAG 2.1 AA Checks Passed ✅ ', 'background: #057a8f; color: #fff'); }
-        }, 2000);
+            if (btn && panel) { console.log('%c [MEBİ Access] Hazır (TR OK) ', 'background: #057a8f; color: #fff'); }
+        }, 500);
     };
 
     if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
