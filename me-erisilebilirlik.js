@@ -760,20 +760,15 @@
             cursor: zoom-out; opacity: 0; transition: opacity 0.3s;
         `;
         
-        const nw = img.naturalWidth || 800;
-        let sizeStyle;
+        const modalImg = document.createElement('img');
+        modalImg.src = img.src || img.currentSrc;
         
-        if (nw < 150) { 
-            sizeStyle = `width: auto; height: auto; min-width: 300px; max-width: 80vw;`; 
-        } else if (nw < 500) {
-            sizeStyle = `width: auto; height: auto; min-width: 600px; max-width: 90vw;`;
-        } else {
-            sizeStyle = `width: 90vw; height: 90vh; object-fit: contain;`;
-        }
-
         modalImg.style.cssText = `
-            ${sizeStyle}
-            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
+            max-width: 85vw; max-height: 85vh;
+            min-width: 250px; /* Çok küçük ikonları biraz büyüt ama abartma */
+            width: auto; height: auto;
+            object-fit: contain;
+            background: transparent;
             transform: scale(0.9); transition: transform 0.3s;
         `;
         
