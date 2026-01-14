@@ -2,8 +2,8 @@
     'use strict';
 
     const CONFIG = {
-        prefix: 'me-access',
-        storageKey: 'me_access_settings_v1',
+        prefix: 'osman-access',
+        storageKey: 'osman_access_settings_v22_nodelay',
         defaultFontSize: 100,
         announceDelay: 150,
         announceClearDelay: 3000
@@ -91,8 +91,18 @@
             @keyframes ${p}-slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
             #${p}-panel.active { display: flex; }
 
-            .${p}-content { flex: 1; overflow-y: auto; padding: 0 4px; min-height: 0; scrollbar-width: none; }
-            .${p}-content::-webkit-scrollbar { display: none; }
+            .${p}-content { 
+                flex: 1; overflow-y: auto; padding: 0 8px; min-height: 0;
+                scroll-behavior: smooth;
+            }
+            .${p}-content::-webkit-scrollbar { width: 5px; }
+            .${p}-content::-webkit-scrollbar-track { background: transparent; }
+            .${p}-content::-webkit-scrollbar-thumb { 
+                background: rgba(5, 122, 143, 0.2); 
+                border-radius: 10px; 
+                transition: background 0.3s;
+            }
+            .${p}-content:hover::-webkit-scrollbar-thumb { background: rgba(5, 122, 143, 0.4); }
 
             .${p}-header { 
                 display: flex; align-items: center; justify-content: space-between; padding: 0 20px; 
@@ -204,10 +214,6 @@
             body.${p}-spacing-letter { letter-spacing: 2px !important; }
             body.${p}-spacing-line { line-height: 2 !important; }
             body.${p}-spacing-word { word-spacing: 6px !important; }
-            
-            body.${p}-align-left, body.${p}-align-left * { text-align: left !important; }
-            body.${p}-align-center, body.${p}-align-center * { text-align: center !important; }
-            body.${p}-align-right, body.${p}-align-right * { text-align: right !important; }
             
             body { color: var(--${p}-text-color) !important; background-color: var(--${p}-bg-color) !important; transition: background-color 0.3s, color 0.3s; }
             h1, h2, h3, h4, h5, h6 { color: var(--${p}-title-color) !important; }
@@ -395,12 +401,43 @@
         } catch(e) { console.error('Erişilebilirlik ayarları yüklenemedi:', e); localStorage.removeItem(CONFIG.storageKey); }
     };
 
+    const updateTextSize = () => {
+        const p = CONFIG.prefix;
+        const scale = settings.fontSize / 100;
+        const widget = document.getElementById(`${p}-widget`);
+        const all = document.body.querySelectorAll('*');
+        const updates = [];
+        
+        all.forEach(el => {
+            if (widget && (el === widget || widget.contains(el))) return;
+            if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(el.tagName)) return;
+
+            if (!el.dataset.osmanOrigFs) {
+                const s = window.getComputedStyle(el);
+                if (s && s.fontSize) el.dataset.osmanOrigFs = s.fontSize;
+            }
+
+            if (el.dataset.osmanOrigFs) {
+                const origVal = parseFloat(el.dataset.osmanOrigFs);
+                if (!isNaN(origVal)) {
+                    if (scale === 1) updates.push({ el, remove: true });
+                    else updates.push({ el, size: origVal * scale });
+                }
+            }
+        });
+
+        updates.forEach(({ el, size, remove }) => { 
+            if (remove) el.style.removeProperty('font-size');
+            else el.style.fontSize = `${size}px`; 
+        });
+    };
+
     const applySettings = (ui) => {
         const p = CONFIG.prefix, body = document.body, overlay = ui.filterOverlay;
         [...body.classList].forEach(c => { if(c.startsWith(p + '-')) body.classList.remove(c); });
         overlay.className = '';
 
-        document.body.style.fontSize = settings.fontSize + '%';
+        updateTextSize();
         const display = document.getElementById('font-display');
         if(display) display.textContent = settings.fontSize + '%';
 
@@ -458,6 +495,8 @@
         updateButton('btn-align-right', settings.textAlign === 'right');
         updateButton('btn-big-mode', settings.bigMode);
         updateButton('btn-shortcuts', settings.shortcuts);
+        
+
         
         document.querySelectorAll(`.${p}-color-box`).forEach(box => {
             const t = box.dataset.type, c = box.dataset.color;
@@ -683,7 +722,7 @@
             const panel = document.querySelector(`#${CONFIG.prefix}-panel`);
             const hasRole = panel && panel.getAttribute('role') === 'dialog';
             const touchOK = document.querySelector(`.${CONFIG.prefix}-color-box`)?.getBoundingClientRect().width >= 44;
-            if (hasRole && touchOK) { console.log('%c [ME Access] WCAG 2.1 AA Checks Passed ✅ ', 'background: #057a8f; color: #fff'); }
+            if (hasRole && touchOK) { console.log('%c [Osman Access] WCAG 2.1 AA Checks Passed ✅ ', 'background: #057a8f; color: #fff'); }
         }, 2000);
     };
 
