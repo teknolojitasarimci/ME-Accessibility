@@ -760,16 +760,20 @@
             cursor: zoom-out; opacity: 0; transition: opacity 0.3s;
         `;
         
-        const modalImg = document.createElement('img');
-        modalImg.src = img.src || img.currentSrc;
+        const nw = img.naturalWidth || 800;
+        let sizeStyle;
+        
+        if (nw < 150) { 
+            sizeStyle = `width: auto; height: auto; min-width: 300px; max-width: 80vw;`; 
+        } else if (nw < 500) {
+            sizeStyle = `width: auto; height: auto; min-width: 600px; max-width: 90vw;`;
+        } else {
+            sizeStyle = `width: 90vw; height: 90vh; object-fit: contain;`;
+        }
+
         modalImg.style.cssText = `
-            max-width: 90vw; max-height: 90vh; 
-            min-width: 60vw; min-height: 60vh;
-            width: auto; height: auto;
-            object-fit: contain;
-            border: 2px solid #fff; border-radius: 8px;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
-            background: rgba(255, 255, 255, 0.1);
+            ${sizeStyle}
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
             transform: scale(0.9); transition: transform 0.3s;
         `;
         
