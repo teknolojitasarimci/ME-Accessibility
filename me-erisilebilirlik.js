@@ -45,7 +45,7 @@
         '#facc15': 'Sarı', '#0891b2': 'Turkuaz', '#65a30d': 'Yeşil', '#ffffff': 'Beyaz', '#000000': 'Siyah'
     };
 
-    const MAIN_ICON_SVG = `<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true" role="img"><g transform="translate(0,1000) scale(0.1,-0.1)" fill="#057a8f"><path d="M4715 9949 c-88 -5 -220 -15 -293 -24 -149 -17 -499 -78 -580 -101 -28 -8 -103 -28 -165 -44 -191 -50 -413 -127 -657 -230 -95 -40 -393 -189 -474 -237 -188 -112 -420 -265 -526 -346 -261 -200 -587 -506 -745 -698 -331 -403 -522 -697 -708 -1087 -116 -244 -198 -462 -297 -787 -35 -112 -99 -410 -120 -555 -77 -535 -78 -989 -5 -1515 38 -272 126 -619 229 -905 149 -415 397 -892 631 -1215 173 -240 293 -383 475 -569 400 -409 829 -721 1340 -973 420 -208 891 -360 1327 -428 87 -13 187 -29 223 -35 317 -50 904 -50 1264 0 596 84 1049 221 1546 469 441 220 763 438 1115 752 824 736 1402 1806 1565 2900 48 323 54 411 54 759 0 317 -9 466 -39 649 -7 47 -23 146 -35 219 -64 403 -227 896 -427 1297 -172 343 -350 619 -611 945 -135 169 -468 503 -619 622 -270 213 -277 218 -463 342 -517 343 -1144 597 -1751 710 -74 14 -157 30 -185 35 -148 29 -611 62 -814 59 -52 0 -167 -5 -255 -9z m506 -1022 c203 -66 382 -199 485 -358 60 -92 80 -140 110 -256 71 -281 -9 -583 -210 -787 -82 -83 -181 -146 -305 -192 -105 -40 -186 -54 -306 -54 -388 1 -743 292 -810 666 -21 114 -16 304 10 399 51 183 179 357 350 475 60 42 191 97 270 116 80 18 341 12 406 -9z m-2900 -1821 c134 -14 312 -30 394 -36 83 -6 164 -13 181 -15 16 -2 115 -11 220 -20 302 -24 511 -45 624 -61 204 -28 948 -93 1145 -100 205 -6 456 4 725 31 80 8 242 23 360 35 118 11 262 27 320 35 92 12 528 54 740 71 41 3 86 7 100 9 14 2 108 11 210 20 240 20 456 42 534 55 161 25 348 -88 400 -243 18 -54 21 -173 6 -229 -30 -105 -151 -222 -264 -252 -62 -16 -256 -46 -556 -86 -124 -16 -247 -34 -275 -40 -27 -6 -151 -28 -275 -50 -124 -21 -261 -45 -305 -54 -44 -8 -132 -22 -195 -31 -151 -21 -439 -74 -468 -86 -13 -5 -33 -29 -45 -57 -22 -47 -22 -47 -22 -762 l0 -715 56 -150 c31 -82 76 -202 99 -265 23 -63 65 -176 92 -250 27 -74 58 -160 68 -190 10 -30 44 -122 75 -205 31 -82 72 -193 90 -245 19 -52 55 -151 80 -220 25 -69 59 -161 75 -205 16 -44 52 -141 80 -215 28 -74 62 -164 75 -200 13 -36 46 -126 75 -200 116 -304 128 -351 110 -451 -23 -124 -95 -218 -210 -273 -57 -27 -75 -31 -150 -31 -118 1 -185 28 -266 109 -54 55 -66 75 -123 211 -109 259 -152 359 -166 390 -19 41 -80 184 -120 280 -18 44 -57 134 -85 200 -28 66 -63 147 -77 180 -14 33 -33 78 -43 101 -11 22 -29 65 -40 95 -12 30 -35 82 -51 117 -16 35 -29 66 -29 69 0 4 -13 36 -30 72 -34 76 -310 726 -361 849 -34 85 -61 112 -107 112 -26 0 -69 -35 -78 -63 -4 -12 -47 -116 -95 -230 -49 -114 -89 -210 -89 -212 0 -3 -11 -28 -24 -57 -13 -29 -35 -80 -49 -113 -14 -33 -46 -109 -72 -170 -26 -60 -64 -153 -85 -205 -21 -52 -45 -108 -53 -125 -8 -16 -38 -86 -67 -155 -29 -69 -70 -164 -91 -213 -21 -48 -39 -90 -39 -94 0 -3 -13 -36 -30 -72 -47 -104 -159 -368 -196 -461 -18 -47 -38 -93 -44 -103 -6 -10 -24 -51 -40 -90 -95 -240 -110 -267 -181 -331 -96 -87 -233 -116 -353 -76 -129 43 -218 131 -253 249 -19 68 -13 197 12 256 10 22 38 94 63 160 24 66 62 166 83 223 54 142 112 297 161 427 57 154 109 292 157 420 97 255 180 482 286 780 41 116 95 266 120 335 101 271 89 156 93 929 3 721 1 768 -42 817 -24 28 -82 40 -506 104 -113 17 -250 40 -305 52 -160 33 -410 75 -700 118 -683 101 -686 101 -779 194 -75 76 -99 132 -104 241 -3 75 0 100 18 148 30 79 111 166 188 200 53 24 157 48 173 40 4 -1 116 -14 250 -27z"/></g></svg>`;
+    const MAIN_ICON_SVG = `<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true" role="img"><g transform="translate(0,1000) scale(0.1,-0.1)" fill="#0696b0"><path d="M4715 9949 c-88 -5 -220 -15 -293 -24 -149 -17 -499 -78 -580 -101 -28 -8 -103 -28 -165 -44 -191 -50 -413 -127 -657 -230 -95 -40 -393 -189 -474 -237 -188 -112 -420 -265 -526 -346 -261 -200 -587 -506 -745 -698 -331 -403 -522 -697 -708 -1087 -116 -244 -198 -462 -297 -787 -35 -112 -99 -410 -120 -555 -77 -535 -78 -989 -5 -1515 38 -272 126 -619 229 -905 149 -415 397 -892 631 -1215 173 -240 293 -383 475 -569 400 -409 829 -721 1340 -973 420 -208 891 -360 1327 -428 87 -13 187 -29 223 -35 317 -50 904 -50 1264 0 596 84 1049 221 1546 469 441 220 763 438 1115 752 824 736 1402 1806 1565 2900 48 323 54 411 54 759 0 317 -9 466 -39 649 -7 47 -23 146 -35 219 -64 403 -227 896 -427 1297 -172 343 -350 619 -611 945 -135 169 -468 503 -619 622 -270 213 -277 218 -463 342 -517 343 -1144 597 -1751 710 -74 14 -157 30 -185 35 -148 29 -611 62 -814 59 -52 0 -167 -5 -255 -9z m506 -1022 c203 -66 382 -199 485 -358 60 -92 80 -140 110 -256 71 -281 -9 -583 -210 -787 -82 -83 -181 -146 -305 -192 -105 -40 -186 -54 -306 -54 -388 1 -743 292 -810 666 -21 114 -16 304 10 399 51 183 179 357 350 475 60 42 191 97 270 116 80 18 341 12 406 -9z m-2900 -1821 c134 -14 312 -30 394 -36 83 -6 164 -13 181 -15 16 -2 115 -11 220 -20 302 -24 511 -45 624 -61 204 -28 948 -93 1145 -100 205 -6 456 4 725 31 80 8 242 23 360 35 118 11 262 27 320 35 92 12 528 54 740 71 41 3 86 7 100 9 14 2 108 11 210 20 240 20 456 42 534 55 161 25 348 -88 400 -243 18 -54 21 -173 6 -229 -30 -105 -151 -222 -264 -252 -62 -16 -256 -46 -556 -86 -124 -16 -247 -34 -275 -40 -27 -6 -151 -28 -275 -50 -124 -21 -261 -45 -305 -54 -44 -8 -132 -22 -195 -31 -151 -21 -439 -74 -468 -86 -13 -5 -33 -29 -45 -57 -22 -47 -22 -47 -22 -762 l0 -715 56 -150 c31 -82 76 -202 99 -265 23 -63 65 -176 92 -250 27 -74 58 -160 68 -190 10 -30 44 -122 75 -205 31 -82 72 -193 90 -245 19 -52 55 -151 80 -220 25 -69 59 -161 75 -205 16 -44 52 -141 80 -215 28 -74 62 -164 75 -200 13 -36 46 -126 75 -200 116 -304 128 -351 110 -451 -23 -124 -95 -218 -210 -273 -57 -27 -75 -31 -150 -31 -118 1 -185 28 -266 109 -54 55 -66 75 -123 211 -109 259 -152 359 -166 390 -19 41 -80 184 -120 280 -18 44 -57 134 -85 200 -28 66 -63 147 -77 180 -14 33 -33 78 -43 101 -11 22 -29 65 -40 95 -12 30 -35 82 -51 117 -16 35 -29 66 -29 69 0 4 -13 36 -30 72 -34 76 -310 726 -361 849 -34 85 -61 112 -107 112 -26 0 -69 -35 -78 -63 -4 -12 -47 -116 -95 -230 -49 -114 -89 -210 -89 -212 0 -3 -11 -28 -24 -57 -13 -29 -35 -80 -49 -113 -14 -33 -46 -109 -72 -170 -26 -60 -64 -153 -85 -205 -21 -52 -45 -108 -53 -125 -8 -16 -38 -86 -67 -155 -29 -69 -70 -164 -91 -213 -21 -48 -39 -90 -39 -94 0 -3 -13 -36 -30 -72 -47 -104 -159 -368 -196 -461 -18 -47 -38 -93 -44 -103 -6 -10 -24 -51 -40 -90 -95 -240 -110 -267 -181 -331 -96 -87 -233 -116 -353 -76 -129 43 -218 131 -253 249 -19 68 -13 197 12 256 10 22 38 94 63 160 24 66 62 166 83 223 54 142 112 297 161 427 57 154 109 292 157 420 97 255 180 482 286 780 41 116 95 266 120 335 101 271 89 156 93 929 3 721 1 768 -42 817 -24 28 -82 40 -506 104 -113 17 -250 40 -305 52 -160 33 -410 75 -700 118 -683 101 -686 101 -779 194 -75 76 -99 132 -104 241 -3 75 0 100 18 148 30 79 111 166 188 200 53 24 157 48 173 40 4 -1 116 -14 250 -27z"/></g></svg>`;
 
     const injectStyles = () => {
         const p = CONFIG.prefix;
@@ -58,7 +58,7 @@
                 --${p}-title-color: inherit; 
                 --${p}-text-color: inherit; 
                 --${p}-bg-color: transparent;
-                --${p}-accent: #057a8f; 
+                --${p}-accent: #0696b0; 
             }
             #${p}-widget { font-family: var(--${p}-font); font-size: 1rem !important; line-height: 1.5 !important; z-index: 2147483647; position: relative; -webkit-font-smoothing: antialiased; }
             #${p}-widget * { box-sizing: border-box; text-decoration: none; color: var(--${p}-text); }
@@ -79,9 +79,9 @@
             }
             #${p}-trigger:hover { transform: scale(1.1); }
             #${p}-trigger svg { width: 100% !important; height: 100% !important; }
-            #${p}-trigger svg g { fill: #057a8f !important; }
+            #${p}-trigger svg g { fill: #0696b0 !important; }
             #${p}-trigger:focus:not(:focus-visible) { outline: none; }
-            #${p}-trigger:focus-visible { outline: 3px solid #057a8f; outline-offset: 4px; }
+            #${p}-trigger:focus-visible { outline: 3px solid #0696b0; outline-offset: 4px; }
 
             #${p}-panel { 
                 position: fixed; right: 20px !important; bottom: 85px !important; width: 340px; 
@@ -213,8 +213,17 @@
             body.${p}-cursor-black, body.${p}-cursor-black *:not(#${p}-widget *) { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='black' stroke='white' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/%3E%3C/svg%3E") 0 0, auto !important; }
             
             body.${p}-hide-images img { opacity: 0 !important; visibility: hidden !important; transition: opacity 0.3s; }
-            body.${p}-highlight-links a { background: rgba(255, 235, 59, 0.4) !important; color: #000 !important; text-decoration: underline !important; border-radius: 2px; }
-            body.${p}-spacing-letter { letter-spacing: 2px !important; }
+            body.${p}-highlight-links a { background: rgba(255, 235, 255, 0.4) !important; color: #000 !important; text-decoration: underline !important; border-radius: 2px; }
+            /* İmleç Çakışması Çözümü: Ne olursa olsun görsel üzerinde büyüteç göster */
+            html body.${p}-interactive-images img,
+            html body.${p}-interactive-images.${p}-cursor-white img,
+            html body.${p}-interactive-images.${p}-cursor-black img { 
+                cursor: zoom-in !important; 
+                cursor: -webkit-zoom-in !important; 
+                cursor: -moz-zoom-in !important;
+                transition: transform 0.2s; 
+            }
+            body.${p}-interactive-images img:hover { transform: scale(1.02); z-index: 10; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #0696b0; }body.${p}-spacing-letter { letter-spacing: 2px !important; }
             body.${p}-spacing-line { line-height: 2 !important; }
             body.${p}-spacing-word { word-spacing: 6px !important; }
 
@@ -376,7 +385,7 @@
                 <!-- 10. Kısayollar (Sabit) -->
                 <section class="${p}-section" style="border-bottom:none; padding-bottom:0;">
                     <div id="${p}-shortcuts-info" aria-label="Klavye kısayol listesi">
-                        <div style="font-weight:700; color:#057a8f; margin-bottom:6px; display:flex; align-items:center; gap:6px; font-size: 0.7rem; text-transform: uppercase;">
+                        <div style="font-weight:700; color:#0696b0; margin-bottom:6px; display:flex; align-items:center; gap:6px; font-size: 0.7rem; text-transform: uppercase;">
                             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M20 5H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zM4 7h16v10H4V7z"/></svg>Klavye Kısayol Listesi
                         </div>
                         <div id="${p}-sc-row"><b>ALT + A</b><span>Paneli Aç/Kapat</span></div>
@@ -569,7 +578,11 @@
              const url = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
              const style = document.createElement('style');
              style.id = `${p}-cursor-style`;
-             style.textContent = `body.${p}-cursor-white, body.${p}-cursor-white *:not(#${p}-widget *) { cursor: url("${url}") 0 0, auto !important; }`;
+             style.textContent = `
+                body.${p}-cursor-white, body.${p}-cursor-white *:not(#${p}-widget *) { cursor: url("${url}") 0 0, auto !important; }
+                /* Görsel Büyütme Açıksa İmleci Büyüteç Yap (Ezilmesini Önle) */
+                body.${p}-interactive-images.${p}-cursor-white img { cursor: zoom-in !important; cursor: -webkit-zoom-in !important; }
+             `;
              const oldStyle = document.getElementById(`${p}-cursor-style`);
              if(oldStyle) oldStyle.remove();
              document.head.appendChild(style);
@@ -579,7 +592,11 @@
               const url = "data:image/svg+xml;utf8," + encodeURIComponent(svg);
              const style = document.createElement('style');
              style.id = `${p}-cursor-style`;
-             style.textContent = `body.${p}-cursor-black, body.${p}-cursor-black *:not(#${p}-widget *) { cursor: url("${url}") 0 0, auto !important; }`;
+             style.textContent = `
+                body.${p}-cursor-black, body.${p}-cursor-black *:not(#${p}-widget *) { cursor: url("${url}") 0 0, auto !important; }
+                /* Görsel Büyütme Açıksa İmleci Büyüteç Yap (Ezilmesini Önle) */
+                body.${p}-interactive-images.${p}-cursor-black img { cursor: zoom-in !important; cursor: -webkit-zoom-in !important; }
+             `;
              const oldStyle = document.getElementById(`${p}-cursor-style`);
              if(oldStyle) oldStyle.remove();
              document.head.appendChild(style);
@@ -931,7 +948,7 @@
         setTimeout(() => {
             const btn = document.querySelector(`#${CONFIG.prefix}-trigger`);
             const panel = document.querySelector(`#${CONFIG.prefix}-panel`);
-            if (btn && panel) { console.log('%c [MEBİ Access] Hazır (TR OK) ', 'background: #057a8f; color: #fff'); }
+            if (btn && panel) { console.log('%c [MEBİ Access] Hazır (TR OK) ', 'background: #0696b0; color: #fff'); }
         }, 500);
     };
 
