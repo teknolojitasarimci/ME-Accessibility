@@ -28,7 +28,7 @@
         hideImages: false,
         speechRate: 1,
         textAlign: 'default',
-        bigMode: true,
+        bigMode: false,
         shortcuts: false,
         cursorSize: 32,
         interactiveImages: false
@@ -51,7 +51,7 @@
         const p = CONFIG.prefix;
         const css = `
             :root { 
-                --${p}-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+                --${p}-font: Arial, Helvetica, sans-serif; 
                 --${p}-bg: rgba(255, 255, 255, 0.75); 
                 --${p}-border: rgba(255, 255, 255, 0.3); 
                 --${p}-text: #1d1d1f; 
@@ -60,8 +60,8 @@
                 --${p}-bg-color: transparent;
                 --${p}-accent: #0696b0; 
             }
-            #${p}-widget { font-family: var(--${p}-font); font-size: 1rem !important; line-height: 1.5 !important; z-index: 2147483647; position: relative; -webkit-font-smoothing: antialiased; }
-            #${p}-widget * { box-sizing: border-box; text-decoration: none; color: var(--${p}-text); }
+            #${p}-widget { font-family: var(--${p}-font); font-size: 16px !important; line-height: 1.5 !important; z-index: 2147483647; position: relative; -webkit-font-smoothing: antialiased; cursor: default !important; }
+            #${p}-widget * { box-sizing: border-box; text-decoration: none; color: var(--${p}-text); font-size: 16px; font-weight: 400; }
             @media (prefers-reduced-motion: reduce) { #${p}-widget * { transition: none !important; animation: none !important; } }
             @media (forced-colors: active) { 
                 .${p}-btn, .${p}-color-box, #${p}-trigger, .${p}-header-close { border: 2px solid ButtonText !important; } 
@@ -98,14 +98,16 @@
                 flex: 1; overflow-y: auto; padding: 0 8px; min-height: 0;
                 scroll-behavior: smooth;
             }
-            .${p}-content::-webkit-scrollbar { width: 5px; }
-            .${p}-content::-webkit-scrollbar-track { background: transparent; }
+            .${p}-content::-webkit-scrollbar { width: 10px; }
+            .${p}-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.02); border-radius: 10px; }
             .${p}-content::-webkit-scrollbar-thumb { 
-                background: rgba(5, 122, 143, 0.2); 
-                border-radius: 10px; 
+                background: var(--${p}-accent) !important; 
+                border-radius: 20px; 
+                border: 3px solid #fff;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
                 transition: background 0.3s;
             }
-            .${p}-content:hover::-webkit-scrollbar-thumb { background: rgba(5, 122, 143, 0.4); }
+            .${p}-content::-webkit-scrollbar-thumb:hover { background: #057a8f !important; }
 
             .${p}-header { 
                 display: flex; align-items: center; justify-content: space-between; padding: 0 20px; 
@@ -115,7 +117,7 @@
             .${p}-header-left { display: flex; align-items: center; gap: 12px; }
             .${p}-header-icon { width: 28px; height: 28px; flex-shrink: 0; }
             .${p}-header-icon svg g { fill: #fff !important; }
-            .${p}-header h2 { font-weight: 700; font-size: 1.1rem; color: #fff !important; margin: 0; letter-spacing: -0.5px; }
+            .${p}-header h2 { font-weight: 900 !important; font-size: 1.5rem !important; color: #fff !important; margin: 0; letter-spacing: -0.2px; }
             
             .${p}-header-close { 
                 width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; 
@@ -127,52 +129,59 @@
 
             .${p}-footer { padding: 0; background: #fff; border-top: 1px solid #f0f0f0; border-radius: 0 0 24px 24px; flex-shrink: 0; height: 50px; overflow: hidden; }
             
-            .${p}-section { padding: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+            .${p}-section { padding: 8px 12px; border-bottom: 1px solid rgba(0,0,0,0.05); }
             .${p}-section:last-of-type { border-bottom: none; }
             .${p}-section h3 { 
-                margin: 0 0 8px 0; font-size: 0.85rem; font-weight: 700; color: #8e8e93 !important; 
+                margin: 0 0 6px 0; font-size: 1rem; font-weight: 900; color: #1d1d1f !important; 
                 text-transform: uppercase; letter-spacing: 0.5px; text-align: left !important; 
+                display: block; width: 100%;
             }
             
-            .${p}-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-            .${p}-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+            .${p}-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+            .${p}-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
             
             .${p}-font-control { 
                 display: flex; align-items: center; justify-content: space-between; 
-                background: rgba(0,0,0,0.04); border-radius: 14px; padding: 4px; 
+                background: rgba(0,0,0,0.04); border-radius: 14px; padding: 6px; 
             }
             .${p}-font-btn { 
-                width: 70px; height: 40px; border: 1px solid rgba(0,0,0,0.08) !important; background: rgba(255, 255, 255, 0.8) !important; 
-                cursor: pointer; font-weight: 600; font-size: 1.4rem; border-radius: 10px; transition: all 0.2s; 
-                display: flex; align-items: center; justify-content: center; color: var(--${p}-accent) !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                width: 70px; height: 44px; border: 2px solid rgba(0, 0, 0, 0.1) !important; 
+                background: #fff !important; border-radius: 14px; cursor: pointer; 
+                font-size: 30px !important; font-weight: 900 !important; color: var(--${p}-accent) !important; 
+                display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             }
-            .${p}-font-btn:hover { background: #fff !important; transform: scale(1.05); border-color: rgba(0, 0, 0, 0.15) !important; }
-            .${p}-font-val { font-size: 1rem; font-weight: 700; color: #1d1d1f; }
+            .${p}-font-btn:hover { transform: scale(1.08); border-color: var(--${p}-accent) !important; background: var(--${p}-accent) !important; color: #fff !important; }
+            .${p}-font-val { font-size: 1.35rem !important; font-weight: 900 !important; color: #1d1d1f; min-width: 80px; text-align: center; display: block; }
 
             .${p}-btn { 
-                background: rgba(255, 255, 255, 0.5) !important; border: 1px solid rgba(0, 0, 0, 0.08) !important; 
-                border-radius: 16px; padding: 8px; display: flex; flex-direction: column; align-items: center; 
-                justify-content: center; gap: 4px; cursor: pointer; color: #1d1d1f !important; font-size: 0.8rem; 
-                font-weight: 600; text-align: center; min-height: 65px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                background: rgba(255, 255, 255, 0.8) !important; border: 1.5px solid rgba(0, 0, 0, 0.1) !important; 
+                border-radius: 18px; padding: 10px 4px; display: flex; flex-direction: column; align-items: center; 
+                justify-content: center; gap: 4px; cursor: pointer; color: #1d1d1f !important; 
+                text-align: center; min-height: 64px; transition: all 0.2s ease;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+                font-weight: 900 !important;
             }
-            .${p}-btn:hover { background: rgba(255, 255, 255, 0.9) !important; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: rgba(0, 0, 0, 0.15) !important; }
-            .${p}-btn.active { background: var(--${p}-accent) !important; color: #fff !important; border-color: var(--${p}-accent) !important; box-shadow: 0 4px 12px rgba(5, 122, 143, 0.4); }
+            .${p}-btn span { font-size: 13px !important; font-weight: 900 !important; line-height: 1.1 !important; display: block; color: inherit !important; pointer-events: none; }
+            .${p}-btn:hover { background: #fff !important; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); border-color: var(--${p}-accent) !important; }
+            .${p}-btn.active { background: var(--${p}-accent) !important; color: #fff !important; border-color: var(--${p}-accent) !important; box-shadow: 0 6px 18px rgba(5, 122, 143, 0.4); }
             .${p}-btn.active * { color: #fff !important; }
-            .${p}-btn i { font-size: 1.5rem; display: flex; transition: transform 0.3s; }
+            .${p}-btn i { font-size: 22px; display: flex; align-items: center; justify-content: center; height: 24px; transition: transform 0.3s; margin-bottom: 2px; color: inherit; pointer-events: none; }
+            .${p}-btn svg { width: 22px; height: 22px; color: inherit; display: block; }
             .${p}-btn:active { transform: scale(0.95); }
 
             .${p}-colors-wrapper { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
             .${p}-color-box { 
-                width: 38px; height: 38px; border: 2px solid #fff; cursor: pointer; 
-                transition: all 0.2s; border-radius: 50%; padding: 0; flex-shrink: 0;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                width: 38px !important; height: 38px !important; border: 2px solid #fff !important; cursor: pointer !important; 
+                transition: all 0.2s !important; border-radius: 50% !important; padding: 0 !important; flex-shrink: 0 !important;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+                display: block !important;
             }
             .${p}-color-box:hover { transform: scale(1.15); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
             .${p}-color-box.active { transform: scale(1.1); border: 3px solid var(--${p}-accent); outline: 2px solid #fff; }
             
-            .${p}-color-label { text-align: left; font-size: 0.8rem; margin: 12px 0 6px; color: #8e8e93; font-weight: 600; width: 100%; }
-            .${p}-color-row-container { display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 12px; }
+            .${p}-color-label { text-align: left !important; font-size: 1rem; margin: 8px 0 4px; color: #1d1d1f !important; font-weight: 900 !important; width: 100%; display: block; }
+            .${p}-color-row-container { display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 8px; }
             
             .${p}-row-reset { 
                 width: 38px; height: 38px; background: rgba(0,0,0,0.05); border: none; border-radius: 50%; 
@@ -181,15 +190,19 @@
             }
             .${p}-row-reset:hover { background: rgba(0,0,0,0.1); color: #1d1d1f; transform: rotate(-45deg); }
 
-            .${p}-slider-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; background: rgba(0,0,0,0.04); padding: 10px; border-radius: 12px; }
+            .${p}-slider-row { display: flex; align-items: center; gap: 12px; margin-top: 6px; background: rgba(0,0,0,0.04); padding: 10px; border-radius: 16px; }
+            .${p}-slider-row label { font-weight: 900 !important; color: #1d1d1f; min-width: 50px; font-size: 17px !important; }
             .${p}-slider { 
-                flex: 1; cursor: pointer; height: 6px; border-radius: 3px; background: #d1d1d6;
-                appearance: none; -webkit-appearance: none;
+                flex: 1; cursor: pointer; height: 12px; border-radius: 12px; background: #e5e5ea;
+                appearance: none; -webkit-appearance: none; outline: none; position: relative;
             }
+            .${p}-slider::-webkit-slider-runnable-track { background: var(--${p}-accent); height: 12px; border-radius: 12px; border: 2.5px solid #fff; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
             .${p}-slider::-webkit-slider-thumb { 
-                -webkit-appearance: none; width: 20px; height: 20px; background: #fff; 
-                border-radius: 50%; border: 0.5px solid rgba(0,0,0,0.1); box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+                -webkit-appearance: none; width: 30px; height: 30px; background: #fff; 
+                border-radius: 50%; border: 4px solid var(--${p}-accent); box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                margin-top: -11px; transition: all 0.2s;
             }
+            .${p}-slider::-webkit-slider-thumb:hover { transform: scale(1.15); box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
             
             #${p}-filter-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2147483640; display: none; }
             #${p}-filter-overlay.mode-gray { backdrop-filter: grayscale(100%); display: block; }
@@ -206,14 +219,22 @@
 
             body.${p}-contrast-high :not(#${p}-widget):not(#${p}-widget *) { background-color: #000 !important; color: #fff !important; }
             body.${p}-contrast-high { background-color: #000 !important; }
-            body.${p}-dyslexia { font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif !important; }
-            body.${p}-readable { font-family: 'SF Pro Text', Arial, sans-serif !important; font-weight: 500; letter-spacing: 0.2px; }
+            body.${p}-dyslexia *:not(#${p}-widget *):not(#${p}-widget) { font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif !important; }
+            body.${p}-readable *:not(#${p}-widget *):not(#${p}-widget) { font-family: 'Verdana', sans-serif !important; letter-spacing: 0.5px !important; font-weight: 900 !important; }
             
             body.${p}-cursor-white, body.${p}-cursor-white *:not(#${p}-widget *) { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='white' stroke='black' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/%3E%3C/svg%3E") 0 0, auto !important; }
             body.${p}-cursor-black, body.${p}-cursor-black *:not(#${p}-widget *) { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='black' stroke='white' stroke-width='1.5' d='M5.5 3.21V20.8l5.5-5.5h8.79L5.5 3.21z'/%3E%3C/svg%3E") 0 0, auto !important; }
             
-            body.${p}-hide-images img { opacity: 0 !important; visibility: hidden !important; transition: opacity 0.3s; }
-            body.${p}-highlight-links a { background: rgba(255, 235, 255, 0.4) !important; color: #000 !important; text-decoration: underline !important; border-radius: 2px; }
+            body.${p}-hide-images img:not(#${p}-widget *) { opacity: 0 !important; visibility: hidden !important; transition: opacity 0.3s; }
+            body.${p}-highlight-links a:not(#${p}-widget *), 
+            body.${p}-highlight-links button:not(#${p}-widget *) { 
+                background-color: #ff0 !important; 
+                color: #000 !important; 
+                outline: 3px dashed #f00 !important; 
+                outline-offset: 2px !important;
+                text-decoration: underline !important; 
+                border-radius: 4px !important; 
+            }
             /* İmleç Çakışması Çözümü: Ne olursa olsun görsel üzerinde büyüteç göster */
             html body.${p}-interactive-images img,
             html body.${p}-interactive-images.${p}-cursor-white img,
@@ -223,19 +244,34 @@
                 cursor: -moz-zoom-in !important;
                 transition: transform 0.2s; 
             }
-            body.${p}-interactive-images img:hover { transform: scale(1.02); z-index: 10; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #0696b0; }body.${p}-spacing-letter { letter-spacing: 2px !important; }
-            body.${p}-spacing-line { line-height: 2 !important; }
-            body.${p}-spacing-word { word-spacing: 6px !important; }
-
-            body.${p}-interactive-images img { cursor: zoom-in !important; transition: transform 0.2s; outline: 3px solid transparent; }
-            body.${p}-interactive-images img:hover { transform: scale(1.02); outline: 3px solid var(--${p}-accent); }
+            body.${p}-interactive-images img:not(#${p}-widget *):hover { transform: scale(1.02); z-index: 10; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.2); outline: 3px solid #0696b0; }
             
-            body.${p}-align-left { text-align: left !important; }
-            body.${p}-align-left * { text-align: left !important; }
-            body.${p}-align-center { text-align: center !important; }
-            body.${p}-align-center * { text-align: center !important; }
-            body.${p}-align-right { text-align: right !important; }
-            body.${p}-align-right * { text-align: right !important; }
+            body.${p}-spacing-letter *:not(#${p}-widget *):not(#${p}-widget) { letter-spacing: 2px !important; }
+            body.${p}-spacing-line *:not(#${p}-widget *):not(#${p}-widget) { line-height: 2 !important; }
+            body.${p}-spacing-word *:not(#${p}-widget *):not(#${p}-widget) { word-spacing: 6px !important; }
+
+            body.${p}-interactive-images img:not(#${p}-widget *) { cursor: zoom-in !important; transition: transform 0.2s; outline: 3px solid transparent; }
+            body.${p}-interactive-images img:not(#${p}-widget *):hover { transform: scale(1.02); outline: 3px solid var(--${p}-accent); }
+            
+            body.${p}-align-left *:not(#${p}-widget *):not(body) { text-align: left !important; justify-content: flex-start !important; }
+            body.${p}-align-center *:not(#${p}-widget *):not(body) { text-align: center !important; justify-content: center !important; }
+            body.${p}-align-right *:not(#${p}-widget *):not(body) { text-align: right !important; justify-content: flex-end !important; }
+            
+            /* Header ve Flex Elemanlar İçin Akıllı Hizalama (Butonları Koru) */
+            body.${p}-align-center .header, body.${p}-align-center header { position: relative !important; display: flex !important; justify-content: center !important; width: 100% !important; }
+            body.${p}-align-center .baslik-sol { width: 100% !important; display: flex !important; justify-content: center !important; margin: 0 !important; }
+            body.${p}-align-center .baslik-sol *, body.${p}-align-center header h1 { text-align: center !important; }
+            body.${p}-align-center .header-sag { position: absolute !important; right: 20px !important; top: 50% !important; transform: translateY(-50%) !important; display: flex !important; z-index: 100 !important; }
+
+            body.${p}-align-right .header, body.${p}-align-right header { position: relative !important; display: flex !important; justify-content: flex-end !important; }
+            body.${p}-align-right .baslik-sol { margin-left: auto !important; margin-right: 180px !important; text-align: right !important; }
+            body.${p}-align-right .baslik-sol *, body.${p}-align-right header h1 { text-align: right !important; }
+            body.${p}-align-right .header-sag { position: absolute !important; right: 20px !important; top: 50% !important; transform: translateY(-50%) !important; display: flex !important; z-index: 100 !important; }
+
+            body.${p}-align-left .header, body.${p}-align-left header { position: relative !important; display: flex !important; justify-content: flex-start !important; }
+            body.${p}-align-left .baslik-sol { margin-left: 0 !important; margin-right: auto !important; text-align: left !important; }
+            body.${p}-align-left .baslik-sol *, body.${p}-align-left header h1 { text-align: left !important; }
+            body.${p}-align-left .header-sag { display: flex !important; margin-left: auto !important; }
 
             #${p}-toast {
                 position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
@@ -245,11 +281,71 @@
             }
             @keyframes ${p}-fadeIn { from { opacity:0; transform:translate(-50%, -10px); } to { opacity:1; transform:translate(-50%, 0); } }
             
-            body { color: var(--${p}-text-color) !important; background-color: var(--${p}-bg-color) !important; transition: background-color 0.3s, color 0.3s; }
-            h1, h2, h3, h4, h5, h6 { color: var(--${p}-title-color) !important; }
+            /* RENK SİSTEMİ (CERRAHİ İZOLASYON) */
+            body.${p}-has-text-color *:not(#${p}-widget *):not(#${p}-widget):not(i):not(svg):not(path) { color: var(--${p}-text-color) !important; }
+            body.${p}-has-bg-color .mebi-etkinlik, 
+            body.${p}-has-bg-color .bilgi-karti, 
+            body.${p}-has-bg-color .modal-content,
+            body.${p}-has-bg-color .instruction-bar,
+            body.${p}-has-bg-color *:not(#${p}-widget *):not(#${p}-widget):not(.header-sag *):not(.baslik-sol *) { background-color: var(--${p}-bg-color) !important; }
+            body.${p}-has-title-color h1:not(#${p}-widget *), 
+            body.${p}-has-title-color h2:not(#${p}-widget *), 
+            body.${p}-has-title-color h3:not(#${p}-widget *), 
+            body.${p}-has-title-color h4:not(#${p}-widget *), 
+            body.${p}-has-title-color h5:not(#${p}-widget *), 
+            body.${p}-has-title-color h6:not(#${p}-widget *) { color: var(--${p}-title-color) !important; }
+
+            /* ZIRHLI MOD: Sabit yükseklik prangalarını ve satır sınırlamalarını (line-clamp) kır */
+            /* ÖNEMLİ: Yapısal alanları (header, footer, nav vb.) bu kuraldan muaf tut ki düzen bozulmasın */
+            body.${p}-force-layout *:not(#${p}-widget):not(#${p}-widget *):not(script):not(style):not(noscript):not(header):not(footer):not(nav):not(.header):not(.baslik-sol):not(.instruction-bar):not(.mebi-etkinlik):not(.bilgi-karti):not(.modal-overlay):not(.modal-content) { 
+                height: auto !important; 
+                max-height: none !important; 
+                min-height: 0 !important; 
+                -webkit-line-clamp: none !important;
+                line-clamp: none !important;
+            }
+
+            /* Sadece metin sınırlaması kullanılan yerlerde display: block ile prangaları kır */
+            body.${p}-force-layout p,
+            body.${p}-force-layout [class*="aciklama"],
+            body.${p}-force-layout [class*="soru"],
+            body.${p}-force-layout span:not(#${p}-widget *):not(.header-btn *):not(.mebi-btn *):not(.yonerge-metin *),
+            body.${p}-force-layout .yonerge-baslik:not(.yonerge-metin *) {
+                display: block !important;
+            }
+
+            /* Yönerge içeriğinin her zaman flex kalmasını garanti et */
+            body.${p}-force-layout .yonerge-icerik {
+                display: flex !important;
+            }
             
-            body.${p}-big-mode #${p}-panel { width: 340px; }
-            .${p}-sr-only { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+            /* Metin taşmasını yönet ama KÖŞE YUVARLAKLIĞINI KORU */
+            /* Border-radius olan veya ana konteynır olan elemanların overflow: hidden kuralına dokunma! */
+            body.${p}-force-layout *:not(#${p}-widget *):not(.mebi-etkinlik):not(.bilgi-karti):not(.modal-content):not([style*="border-radius"]):not([class*="rounded"]):not([class*="pill"]) { 
+                overflow: visible !important; 
+            }
+
+            /* Ana konteynırların taşma kontrolünü ve ARKA PLANINI koru */
+            body.${p}-force-layout .mebi-etkinlik, 
+            body.${p}-force-layout .bilgi-karti,
+            body.${p}-force-layout .modal-content { 
+                overflow: hidden !important; 
+                isolation: isolate !important; 
+                z-index: 1 !important;
+                /* Arkaplanın kaybolmasını önle (Zırhlı Koruma) */
+                background-clip: padding-box !important;
+                transform: translateZ(0); /* Hardware acceleration */
+            }
+
+            body.${p}-force-layout [style*="border-radius"],
+            body.${p}-force-layout [class*="rounded"],
+            body.${p}-force-layout [class*="pill"] { 
+                overflow: hidden !important; 
+                clip-path: none !important;
+            }
+            
+            body.${p}-big-mode #${p}-panel { width: 340px !important; }
+            .${p}-sr-only { position: absolute !important; left: -10000px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
         `;
         const style = document.createElement('style');
         style.textContent = css;
@@ -341,22 +437,22 @@
                 <section class="${p}-section" aria-labelledby="${p}-font-heading"><h3 id="${p}-font-heading">Yazı Boyutu</h3><div class="${p}-font-control" role="group" aria-label="Yazı boyutunu ayarla"><button class="${p}-font-btn" data-action="decFont" aria-label="Yazı boyutunu azalt">-</button><span class="${p}-font-val" id="font-display" aria-live="polite" aria-atomic="true">100%</span><button class="${p}-font-btn" data-action="incFont" aria-label="Yazı boyutunu artır">+</button></div></section>
                 
                 <!-- 2. Sesli Okuma -->
-                <section class="${p}-section" aria-labelledby="${p}-reader-heading"><h3 id="${p}-reader-heading">Sesli Okuma</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="speechPlay" aria-label="Sayfayı sesli oku"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg></i>Oku</button><button class="${p}-btn" data-action="speechPause" aria-label="Okumayı duraklat"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></i>Duraklat</button><button class="${p}-btn" data-action="speechStop" aria-label="Okumayı baştan başlat"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg></i>Tekrar</button></div><div class="${p}-slider-row"><label for="speech-rate">Hız:</label><input type="range" class="${p}-slider" min="0.5" max="2" step="0.1" value="1" id="speech-rate" aria-label="Okuma hızı" aria-valuemin="0.5" aria-valuemax="2" aria-valuenow="1"></div></section>
+                <section class="${p}-section" aria-labelledby="${p}-reader-heading"><h3 id="${p}-reader-heading">Sesli Okuma</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="speechPlay" aria-label="Sayfayı sesli oku"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg></i><span>Oku</span></button><button class="${p}-btn" data-action="speechPause" aria-label="Okumayı duraklat"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></i><span>Duraklat</span></button><button class="${p}-btn" data-action="speechStop" aria-label="Okumayı baştan başlat"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg></i><span>Tekrar</span></button></div><div class="${p}-slider-row"><label for="speech-rate">Hız:</label><input type="range" class="${p}-slider" min="0.5" max="2" step="0.1" value="1" id="speech-rate" aria-label="Okuma hızı" aria-valuemin="0.5" aria-valuemax="2" aria-valuenow="1"></div></section>
 
                 <!-- 3. Okuma Yardımı -->
-                <section class="${p}-section" aria-labelledby="${p}-reading-heading"><h3 id="${p}-reading-heading">Okuma Yardımı</h3><div class="${p}-grid-2"><button class="${p}-btn" data-action="toggleGuide" id="btn-guide" aria-label="Okuma rehberi" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></i><span>Rehber</span></button><button class="${p}-btn" data-action="toggleMask" id="btn-mask" aria-label="Okuma maskesi" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14v12c-3.31 0-6-2.69-6-6s2.69-6 6-6z"/></svg></i><span>Maske</span></button><button class="${p}-btn" data-action="toggleImages" id="btn-images" aria-label="Görselleri gizle" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zm-2 0H5V5h14v14z"/><path d="M8.5 13.5l2.5 3 3.5-4.5 4.5 6H6l2.5-4.5z"/></svg></i><span>Görsel Gizle</span></button><button class="${p}-btn" data-action="toggleInteractiveImages" id="btn-interactive-images" aria-label="Görsellere tıklayınca büyüt" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></i><span>Görsel Büyüt</span></button></div></section>
+                <section class="${p}-section" aria-labelledby="${p}-reading-heading"><h3 id="${p}-reading-heading">Okuma Yardımı</h3><div class="${p}-grid-2"><button class="${p}-btn" data-action="toggleGuide" id="btn-guide" aria-label="Okuma rehberi" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></i><span>Rehber</span></button><button class="${p}-btn" data-action="toggleMask" id="btn-mask" aria-label="Okuma maskesi" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14v12c-3.31 0-6-2.69-6-6s2.69-6 6-6z"/></svg></i><span>Maske</span></button><button class="${p}-btn" data-action="toggleImages" id="btn-images" aria-label="Görselleri gizle" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zm-2 0H5V5h14v14z"/><path d="M8.5 13.5l2.5 3 3.5-4.5 4.5 6H6l2.5-4.5z"/></svg></i><span>Görsel Gizle</span></button><button class="${p}-btn" data-action="toggleInteractiveImages" id="btn-interactive-images" aria-label="Görsellere tıklayınca büyüt" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></i><span>Görsel Büyüt</span></button></div></section>
 
                 <!-- 4. Yazı Tipi -->
                 <section class="${p}-section" aria-labelledby="${p}-font-type-heading"><h3 id="${p}-font-type-heading">Yazı Tipi</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="toggleDyslexia" id="btn-dyslexia" aria-label="Disleksi dostu font" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></i><span>Disleksi<br>Dostu</span></button><button class="${p}-btn" data-action="toggleReadable" id="btn-readable" aria-label="Okunaklı font" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/><path d="M9 22h6"/><path d="M12 22V5"/></svg></i><span>Okunaklı<br>Font</span></button><button class="${p}-btn" data-action="toggleLinks" id="btn-links" aria-label="Bağlantıları vurgula" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg></i><span>Bağlantı<br>Vurgusu</span></button></div></section>
 
                 <!-- 5. Metin Aralıkları -->
-                <section class="${p}-section" aria-labelledby="${p}-spacing-heading"><h3 id="${p}-spacing-heading">Metin Aralıkları</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="toggleLetter" id="btn-letter" aria-label="Harf boşluğu" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12h18M3 7v10M21 7v10"/></svg></i>Harf</button><button class="${p}-btn" data-action="toggleLine" id="btn-line" aria-label="Satır aralığı" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v18M7 3h10M7 21h10"/></svg></i>Satır</button><button class="${p}-btn" data-action="toggleWord" id="btn-word" aria-label="Kelime boşluğu" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h20M2 7v10M22 7v10M12 7v10"/></svg></i>Kelime</button></div></section>
+                <section class="${p}-section" aria-labelledby="${p}-spacing-heading"><h3 id="${p}-spacing-heading">Metin Aralıkları</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="toggleLetter" id="btn-letter" aria-label="Harf boşluğu" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12h18M3 7v10M21 7v10"/></svg></i><span>Harf</span></button><button class="${p}-btn" data-action="toggleLine" id="btn-line" aria-label="Satır aralığı" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v18M7 3h10M7 21h10"/></svg></i><span>Satır</span></button><button class="${p}-btn" data-action="toggleWord" id="btn-word" aria-label="Kelime boşluğu" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 12h20M2 7v10M22 7v10M12 7v10"/></svg></i><span>Kelime</span></button></div></section>
 
                 <!-- 6. Metni Hizala -->
-                <section class="${p}-section" aria-labelledby="${p}-align-heading"><h3 id="${p}-align-heading">Metni Hizala</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="alignLeft" id="btn-align-left" aria-label="Sola hizala" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z"/></svg></i>Sola</button><button class="${p}-btn" data-action="alignCenter" id="btn-align-center" aria-label="Ortala" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 21h18v-2H3v2zm4-4h10v-2H7v2zm-4-4h18v-2H3v2zm4-4h10V7H7v2zM3 3v2h18V3H3z"/></svg></i>Ortala</button><button class="${p}-btn" data-action="alignRight" id="btn-align-right" aria-label="Sağa hizala" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 21h18v-2H3v2zm6-4h12v-2H9v2zm-6-4h18v-2H3v2zm6-4h12V7H9v2zM3 3v2h18V3H3z"/></svg></i>Sağa</button></div></section>
+                <section class="${p}-section" aria-labelledby="${p}-align-heading"><h3 id="${p}-align-heading">Metni Hizala</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="alignLeft" id="btn-align-left" aria-label="Sola hizala" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 15H3v2h12v-2zm0-8H3v2h12V7zM3 13h18v-2H3v2zm0 8h18v-2H3v2zM3 3v2h18V3H3z"/></svg></i><span>Sola</span></button><button class="${p}-btn" data-action="alignCenter" id="btn-align-center" aria-label="Ortala" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 21h18v-2H3v2zm4-4h10v-2H7v2zm-4-4h18v-2H3v2zm4-4h10V7H7v2zM3 3v2h18V3H3z"/></svg></i><span>Ortala</span></button><button class="${p}-btn" data-action="alignRight" id="btn-align-right" aria-label="Sağa hizala" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 21h18v-2H3v2zm6-4h12v-2H9v2zm-6-4h18v-2H3v2zm6-4h12V7H9v2zM3 3v2h18V3H3z"/></svg></i><span>Sağa</span></button></div></section>
 
                 <!-- 7. Görsel Ayarlar -->
-                <section class="${p}-section" aria-labelledby="${p}-color-heading"><h3 id="${p}-color-heading">Görsel Ayarlar</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="toggleContrast" id="btn-contrast" aria-label="Yüksek kontrast" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14v12c-3.31 0-6-2.69-6-6s2.69-6 6-6z"/></svg></i>Kontrast</button><button class="${p}-btn" data-action="toggleGray" id="btn-gray" aria-label="Solgun renkler" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.3"/></svg></i>Solgun</button><button class="${p}-btn" data-action="lowSaturation" id="btn-lowsat" aria-label="Düşük doygunluk" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/></svg></i>Düşük</button><button class="${p}-btn" data-action="highSaturation" id="btn-highsat" aria-label="Yüksek doygunluk" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg></i>Yüksek</button></div></section>
+                <section class="${p}-section" aria-labelledby="${p}-color-heading"><h3 id="${p}-color-heading">Görsel Ayarlar</h3><div class="${p}-grid-3"><button class="${p}-btn" data-action="toggleContrast" id="btn-contrast" aria-label="Yüksek kontrast" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14v12c-3.31 0-6-2.69-6-6s2.69-6 6-6z"/></svg></i><span>Kontrast</span></button><button class="${p}-btn" data-action="toggleGray" id="btn-gray" aria-label="Solgun renkler" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" opacity="0.3"/></svg></i><span>Solgun</span></button><button class="${p}-btn" data-action="lowSaturation" id="btn-lowsat" aria-label="Düşük doygunluk" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2v20"/></svg></i><span>Düşük</span></button><button class="${p}-btn" data-action="highSaturation" id="btn-highsat" aria-label="Yüksek doygunluk" aria-pressed="false"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg></i><span>Yüksek</span></button></div></section>
 
                 <!-- 8. İmleç -->
                 <section class="${p}-section" aria-labelledby="${p}-cursor-heading"><h3 id="${p}-cursor-heading">İmleç</h3>
@@ -385,8 +481,8 @@
                 <!-- 10. Kısayollar (Sabit) -->
                 <section class="${p}-section" style="border-bottom:none; padding-bottom:0;">
                     <div id="${p}-shortcuts-info" aria-label="Klavye kısayol listesi">
-                        <div style="font-weight:700; color:#0696b0; margin-bottom:6px; display:flex; align-items:center; gap:6px; font-size: 0.7rem; text-transform: uppercase;">
-                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M20 5H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zM4 7h16v10H4V7z"/></svg>Klavye Kısayol Listesi
+                        <div style="font-weight:900 !important; color:#0696b0; margin-bottom:10px; display:flex; align-items:center; gap:8px; font-size: 1rem !important; text-transform: uppercase; letter-spacing: 0.5px;">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M20 5H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zM4 7h16v10H4V7z"/></svg>Klavye Kısayol Listesi
                         </div>
                         <div id="${p}-sc-row"><b>ALT + A</b><span>Paneli Aç/Kapat</span></div>
                         <div id="${p}-sc-row"><b>ALT + R</b><span>Ayarları Sıfırla</span></div>
@@ -396,8 +492,8 @@
                 </section>
             </div>
             <div class="${p}-footer">
-                  <button class="${p}-btn" data-action="resetAll" aria-label="Tüm erişilebilirlik ayarlarını sıfırla ve sayfayı yenile" style="width:100%; height:50px; min-height:50px; background:#d32f2f !important; color:#ffffff !important; border:none !important; border-radius:0 0 24px 24px !important; flex-direction:row; gap:10px; font-weight:800; font-size:15px; margin:0; justify-content:center; align-items:center; padding: 0; display:flex;">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" style="stroke:#fff !important; pointer-events:none;"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg><span style="color:#fff !important; pointer-events:none;">Ayarları Sıfırla</span></button>
+                  <button class="${p}-btn" data-action="resetAll" aria-label="Tüm erişilebilirlik ayarlarını sıfırla ve sayfayı yenile" style="width:100%; height:52px; min-height:52px; background:#d32f2f !important; color:#ffffff !important; border:none !important; border-radius:0 0 24px 24px !important; flex-direction:row; gap:10px; font-weight:900 !important; font-size:1.35rem !important; margin:0; justify-content:center; align-items:center; padding: 0; display:flex;">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true" style="stroke:#fff !important; pointer-events:none;"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg><span style="color:#fff !important; pointer-events:none; font-weight: 900 !important; font-size:1.35rem !important;">Ayarları Sıfırla</span></button>
             </div>
         `;
 
@@ -457,16 +553,34 @@
         const p = CONFIG.prefix;
         const scale = settings.fontSize / 100;
         const widget = document.getElementById(`${p}-widget`);
-        const all = document.body.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, li, div, label, input, button, textarea, td, th, blockquote, figcaption, b, i, strong, em');
+        const all = document.body.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, li, div, label, input, button, textarea, td, th, blockquote, figcaption, b, i, strong, em, svg');
         const updates = [];
         
         all.forEach(el => {
             if (widget && (el === widget || widget.contains(el))) return;
+            if (el.closest && el.closest(`#${p}-widget`)) return;
             if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(el.tagName)) return;
+
+            if (el.tagName.toLowerCase() === 'svg' || el.tagName.toLowerCase() === 'i') {
+                if (scale === 1) {
+                    el.style.removeProperty('transform');
+                    el.style.removeProperty('transform-origin');
+                } else {
+                    el.style.transform = `scale(${scale})`;
+                    el.style.transformOrigin = 'center center';
+                    if (window.getComputedStyle(el).display === 'inline') el.style.display = 'inline-block';
+                }
+                return;
+            }
 
             if (!el.dataset.osmanOrigFs) {
                 const s = window.getComputedStyle(el);
-                if (s && s.fontSize) el.dataset.osmanOrigFs = s.fontSize;
+                if (s && s.fontSize) {
+                    let fs = parseFloat(s.fontSize);
+                    const currentActiveScale = settings.fontSize / 100;
+                    if (currentActiveScale !== 1) fs = fs / currentActiveScale;
+                    el.dataset.osmanOrigFs = fs + "px";
+                }
             }
 
             if (el.dataset.osmanOrigFs) {
@@ -479,67 +593,23 @@
         });
 
         updates.forEach(({ el, size, remove }) => { 
-            if (remove) el.style.removeProperty('font-size');
+            if (remove || scale === 1) el.style.removeProperty('font-size');
             else el.style.fontSize = `${size}px`; 
         });
+
+        const needsForceLayout = settings.fontSize > 105 || settings.lineHeight || settings.wordSpacing || settings.letterSpacing;
+        if (needsForceLayout) document.body.classList.add(`${p}-force-layout`);
+        else document.body.classList.remove(`${p}-force-layout`);
     };
 
     const updateColors = () => {
         const p = CONFIG.prefix;
-        const widget = document.getElementById(`${p}-widget`);
-        const all = document.body.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, li, div, label, input, button, textarea, td, th, section, article, header, footer, nav');
-        
-        const tc = settings.textColor;
-        const bg = settings.bgColor;
-        const ti = settings.titleColor;
+        const tc = settings.textColor, bg = settings.bgColor, ti = settings.titleColor;
+        const b = document.body;
 
-        const isTransparent = (color) => {
-            if (!color || color === 'transparent' || color === 'rgba(0, 0, 0, 0)') return true;
-            return false;
-        };
-
-        if (!tc && !bg && !ti) {
-            all.forEach(el => {
-                if (widget && (el === widget || widget.contains(el))) return;
-                el.style.removeProperty('color');
-                el.style.removeProperty('background-color');
-            });
-            document.body.style.removeProperty('background-color');
-            document.body.style.removeProperty('color');
-            return;
-        }
-
-        if (bg) document.body.style.setProperty('background-color', bg, 'important');
-        if (tc) document.body.style.setProperty('color', tc, 'important');
-
-        all.forEach(el => {
-            if (widget && (el === widget || widget.contains(el))) return;
-            if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'IMG', 'VIDEO', 'SVG', 'PATH', 'CIRCLE', 'RECT', 'CANVAS', 'IFRAME'].includes(el.tagName)) return;
-            if (el.tagName === 'I' || el.classList.contains('fa') || el.classList.contains('fas') || el.classList.contains('material-icons')) return;
-
-            const style = window.getComputedStyle(el);
-            if (style.backgroundImage && style.backgroundImage !== 'none') return;
-
-            if (bg) {
-                if (!isTransparent(style.backgroundColor)) {
-                   el.style.setProperty('background-color', bg, 'important');
-                }
-            } else {
-                el.style.removeProperty('background-color');
-            }
-
-            const isTitle = ['H1','H2','H3','H4','H5','H6'].includes(el.tagName);
-            
-            if (isTitle && ti) {
-                el.style.setProperty('color', ti, 'important');
-            } else if (tc) {
-                if (!isTitle || !ti) {
-                     el.style.setProperty('color', tc, 'important');
-                }
-            } else {
-                 if (!isTitle || !ti) el.style.removeProperty('color');
-            }
-        });
+        if (tc) { b.classList.add(`${p}-has-text-color`); b.style.setProperty(`--${p}-text-color`, tc); } else { b.classList.remove(`${p}-has-text-color`); b.style.removeProperty(`--${p}-text-color`); }
+        if (bg) { b.classList.add(`${p}-has-bg-color`); b.style.setProperty(`--${p}-bg-color`, bg); b.style.setProperty('background-color', bg, 'important'); } else { b.classList.remove(`${p}-has-bg-color`); b.style.removeProperty(`--${p}-bg-color`); b.style.removeProperty('background-color'); }
+        if (ti) { b.classList.add(`${p}-has-title-color`); b.style.setProperty(`--${p}-title-color`, ti); } else { b.classList.remove(`${p}-has-title-color`); b.style.removeProperty(`--${p}-title-color`); }
     };
 
     const applySettings = (ui) => {
@@ -635,16 +705,21 @@
 
         if(settings.textAlign === 'center') body.classList.add(`${p}-align-center`);
         if(settings.textAlign === 'right') body.classList.add(`${p}-align-right`);
-        if(settings.bigMode) body.classList.add(`${p}-big-mode`);
+        
+        const needsForceLayout = settings.fontSize > 105 || settings.lineHeight || settings.wordSpacing || settings.letterSpacing;
+        if (needsForceLayout) {
+            body.classList.add(`${p}-force-layout`);
+        } else {
+            body.classList.remove(`${p}-force-layout`);
+        }
 
         if(settings.bigMode) body.classList.add(`${p}-big-mode`);
 
         let mag = document.getElementById(`${p}-magnifier`);
         if(mag) mag.style.display = 'none';
 
-        if(settings.textColor) body.style.setProperty(`--${p}-text-color`, settings.textColor); else body.style.removeProperty(`--${p}-text-color`);
-        if(settings.bgColor) body.style.setProperty(`--${p}-bg-color`, settings.bgColor); else body.style.removeProperty(`--${p}-bg-color`);
-        if(settings.titleColor) body.style.setProperty(`--${p}-title-color`, settings.titleColor); else body.style.removeProperty(`--${p}-title-color`);
+        updateTextSize();
+        updateColors();
 
         document.getElementById(`${p}-guide`).style.display = settings.readingGuide ? 'block' : 'none';
         document.getElementById(`${p}-mask`).style.display = settings.readingMask ? 'block' : 'none';
@@ -662,6 +737,9 @@
             active ? box.classList.add('active') : box.classList.remove('active');
             box.setAttribute('aria-checked', active ? 'true' : 'false');
         });
+
+        const rateInput = document.getElementById('speech-rate');
+        if(rateInput) { rateInput.value = settings.speechRate; rateInput.setAttribute('aria-valuenow', settings.speechRate); }
 
         saveSettings();
     };
@@ -704,34 +782,46 @@
                 textToRead = parts.join(' ');
             }
             
-            textToRead = textToRead.replace(/\s+/g, ' ').trim().substring(0, 15000);
+            textToRead = textToRead.replace(/\s+/g, ' ').trim();
             if (!textToRead) return;
 
-            let voices = synth.getVoices();
-            if (voices.length === 0) {
-                window.speechSynthesis.onvoiceschanged = () => {
-                     voices = synth.getVoices();
+            const chunks = textToRead.match(/[^.!?]+[.!?]+|\S+/g) || [textToRead];
+            let currentIdx = 0;
+
+            const readNextChunk = () => {
+                if (currentIdx >= chunks.length || !isReading) {
+                    isReading = false;
+                    cleanupSpeech();
+                    return;
+                }
+
+                const u = new SpeechSynthesisUtterance(chunks[currentIdx].trim());
+                u.lang = 'tr-TR';
+                u.rate = settings.speechRate;
+
+                let voices = synth.getVoices();
+                let selectedVoice = voices.find(v => v.lang.startsWith('tr') && !v.name.includes('Google'));
+                if (!selectedVoice) selectedVoice = voices.find(v => v.lang.startsWith('tr'));
+                if (!selectedVoice) selectedVoice = voices.find(v => v.lang.includes('tr'));
+                if (selectedVoice) u.voice = selectedVoice;
+
+                u.onend = () => {
+                    currentIdx++;
+                    readNextChunk();
                 };
-            }
 
-            const u = new SpeechSynthesisUtterance(textToRead);
-            u.lang = 'tr-TR';
-            u.rate = settings.speechRate;
+                u.onerror = (e) => {
+                    console.error('TTS Hatası:', e);
+                    isReading = false;
+                    cleanupSpeech();
+                };
 
-            let selectedVoice = voices.find(v => v.lang.startsWith('tr') && !v.name.includes('Google'));
-            if (!selectedVoice) selectedVoice = voices.find(v => v.lang.startsWith('tr'));
-            if (!selectedVoice) selectedVoice = voices.find(v => v.lang.includes('tr'));
-            
-            if (selectedVoice) {
-                u.voice = selectedVoice;
-            }
+                speechUtterance = u;
+                synth.speak(u);
+            };
 
-            u.onend = () => { isReading = false; cleanupSpeech(); };
-            u.onerror = () => { isReading = false; cleanupSpeech(); };
-            
-            speechUtterance = u;
-            synth.speak(u);
             isReading = true;
+            readNextChunk();
         }
     };
 
@@ -808,6 +898,40 @@
         document.addEventListener('keydown', escHandler);
     };
 
+    const setupObserver = (ui) => {
+        let observerTimeout;
+        const observer = new MutationObserver((mutations) => {
+            let shouldRefresh = false;
+            mutations.forEach(m => {
+                if (m.addedNodes.length > 0) {
+                    m.addedNodes.forEach(node => {
+                        if (node.nodeType === 1 && !node.closest(`#${CONFIG.prefix}-widget`)) {
+                            shouldRefresh = true;
+                        }
+                    });
+                }
+            });
+            if (shouldRefresh) {
+                clearTimeout(observerTimeout);
+                observerTimeout = setTimeout(() => {
+                    updateTextSize();
+                    updateColors();
+                }, 200);
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    };
+
+    const setupRightClickControl = () => {
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.closest(`#${CONFIG.prefix}-widget`)) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return false;
+            }
+        }, true);
+    };
+
     const init = () => {
         if (!document.documentElement.lang) document.documentElement.setAttribute('lang', 'tr');
         
@@ -819,6 +943,8 @@
         try { injectStyles(); } catch(e) { console.error('Stil hatası:', e); }
         
         const ui = createUI(); 
+        setupObserver(ui);
+        setupRightClickControl();
         
         ui.trigger.addEventListener('click', () => togglePanel(ui));
         const closeBtn = document.getElementById(`${CONFIG.prefix}-close-btn`);
@@ -895,7 +1021,7 @@
                 }
                 if(act === 'speechPlay') { if (window.speechSynthesis.paused) { window.speechSynthesis.resume(); ui.announce('Okuma devam ediyor'); } else { speak('play'); ui.announce('Sesli okuma başlatıldı'); } }
                 if(act === 'speechPause') { speak('pause'); ui.announce('Sesli okuma duraklatıldı'); }
-                if(act === 'speechStop') { speak('play'); ui.announce('Sesli okuma baştan başlatılıyor'); }
+                if(act === 'speechStop') { speak('stop'); ui.announce('Sesli okuma durduruldu'); }
                 if(act === 'resetAll') { 
                     ui.announce('Tüm ayarlar sıfırlanıyor');
                     const savedShortcuts = settings.shortcuts; 
